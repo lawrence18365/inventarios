@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: inventarios
+    runtime: node
+    repo: https://github.com/lawrence18365/inventarios.git
+    branch: main
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # Set manually in Render dashboard
+      - key: NODE_ENV
+        value: production
