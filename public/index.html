@@ -1265,2130 +1265,23 @@
   </div>
 
   <script>
-    const CC = [
-      "#c9a84c",
-      "#5285e0",
-      "#52c87a",
-      "#e05252",
-      "#e8a852",
-      "#a852e0",
-      "#52c8c8",
-      "#e0528a",
-    ];
-    const CATS_ALL = [
-      "Abarrotes",
-      "Destilados",
-      "Cervezas y Refrescos",
-      "Vinos",
-      "Lacteos",
-      "Carnes",
-      "Mariscos",
-      "Frutas y Verduras",
-    ];
-    const BARRA_C = [
-      "Destilados",
-      "Cervezas y Refrescos",
-      "Vinos",
-      "Abarrotes",
-    ];
-    const COCINA_C = [
-      "Carnes",
-      "Mariscos",
-      "Frutas y Verduras",
-      "Lacteos",
-      "Abarrotes",
-    ];
+    const CC = ["#c9a54c","#5285e0","#4db878","#cf4f4f","#e8a852","#a852e0","#52c8c8","#e0528a"];
+    const CATS_ALL = ["Abarrotes","Destilados","Cervezas y Refrescos","Vinos","Lacteos","Carnes","Mariscos","Frutas y Verduras"];
+    const BARRA_C = ["Destilados","Cervezas y Refrescos","Vinos","Abarrotes"];
+    const COCINA_C = ["Carnes","Mariscos","Frutas y Verduras","Lacteos","Abarrotes"];
     const INV0 = 334195;
 
-    const BASE = {
-      Abarrotes: [{
-          id: "P0002",
-          n: "ACEITE DE AJONJOLI BOTE KADOYA",
-          p: 670,
-          a: 0,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0015",
-          n: "ACEITE VEGETAL AVE 10 LT",
-          p: 750,
-          a: 1.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1748",
-          n: "ACEITUNA VERDE S/HUESO 935 GR",
-          p: 91.81,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0048",
-          n: "ALMENDRA ENTERA 1 KG",
-          p: 220.57,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0049",
-          n: "ALMENDRA FILETEADA 1 KG",
-          p: 280,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1808",
-          n: "ARANDANOS SECOS MEMBERS 1.02 KG",
-          p: 129,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0061",
-          n: "ARROZ 1 KG BOLSA",
-          p: 33.37,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1810",
-          n: "AZUCAR REFINADA ZULKA 1 KG",
-          p: 38.46,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0142",
-          n: "CANELA ENTERA 1 KG",
-          p: 360,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0206",
-          n: "CHILE CHIPOTLE .220 GR LA COSTEÑA",
-          p: 48.28,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0212",
-          n: "CHOCOLATE BLANCO TURIN 1 KG",
-          p: 253.14,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1805",
-          n: "CORAZONES DE ALCACHOFA SAN MIGUEL 420 GR",
-          p: 54.73,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1597",
-          n: "DULCE DE LECHE NESTLE LATA 360 ML",
-          p: 32.16,
-          a: 10,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0293",
-          n: "ELOTE DORADO COSTEÑA 400GR",
-          p: 18.47,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1706",
-          n: "ESPAGUETTI NO 5 BARILLA .501",
-          p: 24.42,
-          a: 9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0328",
-          n: "FRIJOL PERUANO 1 KG",
-          p: 77.74,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0336",
-          n: "GALLETAS MARIAS GAMESA 170 GR",
-          p: 13.95,
-          a: 18,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0340",
-          n: "GELATINA SABORES 120 GR SOBRE",
-          p: 12.39,
-          a: 8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0345",
-          n: "GLUTAMATO MONOSODICO 1KG AJINOMOTO",
-          p: 208,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0341",
-          n: "GRENETINA DUCHE 1 KG",
-          p: 233.14,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2025",
-          n: "HARINA 25 KG BULTO",
-          p: 434.28,
-          a: 0.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0368",
-          n: "HUEVO CAJA 30 PZS",
-          p: 558.23,
-          a: 0.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0891",
-          n: "JUGO DE ARANDANO 1LT",
-          p: 30.82,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0890",
-          n: "JUGO DE PIÑA 1LT",
-          p: 24.65,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0392",
-          n: "JUGO MAGGI 100 ML",
-          p: 35.59,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0405",
-          n: "LECHE CARNATION 1LT",
-          p: 54.06,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0406",
-          n: "LECHE CONDENSADA LA LECHERA 375G",
-          p: 28.56,
-          a: 6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0455",
-          n: "MAYONESA MCCORMICK 3.4KG",
-          p: 292.33,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0465",
-          n: "MIEL DE ABEJA CARLOTA 1.05 KG",
-          p: 153.54,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0477",
-          n: "MOSTAZA ANTIGÜA 865 GR MAILLE",
-          p: 197.58,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0480",
-          n: "MOSTAZA DIJON 865 GR",
-          p: 169.52,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0498",
-          n: "NUEZ EN MITADES 1KG",
-          p: 321.14,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1806",
-          n: "PALMITO ENTERO SAN MIGUEL 420 GR",
-          p: 60.01,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0589",
-          n: "PIMIENTA NEGRA ENTERA 520 GR",
-          p: 174.21,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0598",
-          n: "PIMIENTA NEGRA MOLIDA 510 GR",
-          p: 235.54,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0603",
-          n: "PIÑON BLANCO 1KG",
-          p: 600,
-          a: 0.25,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1827",
-          n: "POLVO ROYAL 220 GR",
-          p: 89,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0622",
-          n: "PURE DE TOMATE 3 LT BOLSA",
-          p: 81.7,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0698",
-          n: "SALSA TABASCO 60ML FRASCO",
-          p: 34.28,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0089",
-          n: "SPLENDA SOBRES CAJA 2000",
-          p: 295.09,
-          a: 0.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0371",
-          n: "TE MENTA EUROTE 50 GR",
-          p: 220,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0780",
-          n: "UVA PASA BOLSA 1 KILO",
-          p: 91.42,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0789",
-          n: "VINAGRE BALSAMICO 1 LT PIANELO",
-          p: 112.24,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0792",
-          n: "VINAGRE BLANCO 3.7 LT LA COSTEÑA",
-          p: 36.86,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0806",
-          n: "VINO BLANCO CALIFORNIA 1 LT",
-          p: 79,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2035",
-          n: "VINO TINTO CALIFORNIA 1 LT",
-          p: 79,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0948",
-          n: "YOGURTH DE FRESA 1 LT",
-          p: 41.5,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      Destilados: [{
-          id: "D001",
-          n: "BOTELLA ALMA DE MAGNO 700ML",
-          p: 519,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D003",
-          n: "BOTELLA CARDENAL DE MENDOZA 700ML",
-          p: 1133,
-          a: 0.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D007",
-          n: "BOTELLA JAIME I 700ML",
-          p: 3015,
-          a: 1.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D010",
-          n: "BOTELLA TERRY CENTENARIO 700ML",
-          p: 333.71,
-          a: 0.6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D014",
-          n: "BOTELLA 400 CONEJOS 750ML",
-          p: 449,
-          a: 1.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D015",
-          n: "BOTELLA AMARAS ESPADIN 750ML",
-          p: 613,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D018",
-          n: "BOTELLA AMARAS CUPREATA 750ML",
-          p: 899,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D025",
-          n: "BOTELLA MONTELOBOS ENSAMBLE 750ML",
-          p: 1095,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D026",
-          n: "BOTELLA MONTELOBOS ESPADIN 750ML",
-          p: 648,
-          a: 2.2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D037",
-          n: "BOTELLA BACARDI BLANCO 750ML",
-          p: 179.44,
-          a: 2.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D045",
-          n: "BOTELLA FLOR DE CAÑA EXTRA DRY 4 AÑOS",
-          p: 214.02,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D046",
-          n: "BOTELLA FLOR DE CAÑA 18 AÑOS 750ML",
-          p: 1015,
-          a: 0.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D048",
-          n: "BOTELLA HAVANA 7 AÑOS 700ML",
-          p: 345,
-          a: 5.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D050",
-          n: "BOTELLA MATUSALEM CLASICO 750ML",
-          p: 322.68,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D053",
-          n: "BOTELLA ZACAPA 23 750ML",
-          p: 999,
-          a: 0.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D057",
-          n: "BOTELLA CENTENARIO REPOSADO 700ML",
-          p: 270,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D058",
-          n: "BOTELLA DON JULIO 1942 750ML",
-          p: 2999,
-          a: 0.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D059",
-          n: "BOTELLA DON JULIO 70 700ML",
-          p: 789,
-          a: 1.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D066",
-          n: "BOTELLA 1800 CRISTALINO 700ML",
-          p: 525,
-          a: 1.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D069",
-          n: "BOTELLA 3 GENERACIONES CRISTALINO 750ML",
-          p: 952,
-          a: 2.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D071",
-          n: "BOTELLA 7 LEGUAS BLANCO 750ML",
-          p: 620,
-          a: 1.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D077",
-          n: "BOTELLA CENTENARIO PLATA 700ML",
-          p: 269,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D081",
-          n: "BOTELLA DON JULIO REPOSADO 700ML",
-          p: 566,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D082",
-          n: "BOTELLA DON JULIO AÑEJO 700ML",
-          p: 965,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D083",
-          n: "BOTELLA DON JULIO BLANCO 750ML",
-          p: 439,
-          a: 0.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D088",
-          n: "BOTELLA HERRADURA SELECCION SUPREMA",
-          p: 3850,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D089",
-          n: "BOTELLA HORNITOS CRISTALINO 750ML",
-          p: 649,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D104",
-          n: "BOTELLA SAMBUCA BLANCO 700ML",
-          p: 339.49,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D115",
-          n: "BOTELLA BEEFEATER 750ML",
-          p: 404.8,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D118",
-          n: "BOTELLA BOMBAY SAPPHIRE 750ML",
-          p: 420,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D119",
-          n: "BOTELLA BULLDOG 750ML",
-          p: 709,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D125",
-          n: "BOTELLA MOM 700ML",
-          p: 563.33,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D131",
-          n: "BOTELLA TANQUERAY 750ML",
-          p: 442,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D148",
-          n: "BOTELLA APEROL 700ML",
-          p: 320,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D149",
-          n: "BOTELLA BAILEYS 700ML",
-          p: 332,
-          a: 1.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D150",
-          n: "BOTELLA CAMPARI 750ML",
-          p: 460.41,
-          a: 0.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D152",
-          n: "BOTELLA CHARTREUSE AMARILLO 700ML",
-          p: 1195,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D155",
-          n: "BOTELLA DISARONNO 700ML",
-          p: 483.6,
-          a: 3.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D159",
-          n: "BOTELLA GRAND MARINIER 700ML",
-          p: 776,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D162",
-          n: "BOTELLA LICOR 43 750ML",
-          p: 475.28,
-          a: 2.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D172",
-          n: "BOTELLA ABSOLUT AZUL 750ML",
-          p: 251.84,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D178",
-          n: "BOTELLA CIROC 750ML",
-          p: 793,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D190",
-          n: "BOTELLA BUCHANANS 15 750ML",
-          p: 1379,
-          a: 1.2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D191",
-          n: "BOTELLA BUCHANANS 18 750ML",
-          p: 1810.43,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D193",
-          n: "BOTELLA BUCHANANS RED SEAL 750ML",
-          p: 4458.88,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D196",
-          n: "BOTELLA CHIVAS REGAL 12 750ML",
-          p: 664.14,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D199",
-          n: "BOTELLA CHIVAS REGAL 21 ROYAL SALUTE",
-          p: 6407,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D203",
-          n: "BOTELLA ET. NEGRA 750ML",
-          p: 789,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D204",
-          n: "BOTELLA ET. ROJA 700ML",
-          p: 315,
-          a: 1.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D207",
-          n: "BOTELLA ETIQUETA AZUL 750ML",
-          p: 5650,
-          a: 0.77,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D208",
-          n: "BOTELLA GENTLEMAN JACK 750ML",
-          p: 710,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D214",
-          n: "BOTELLA GLENLIVET 18 750ML",
-          p: 4691,
-          a: 1.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D215",
-          n: "BOTELLA GLENLIVET FOUNDERS RESERVE",
-          p: 1155,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D217",
-          n: "BOTELLA HIBIKI 750ML",
-          p: 1955,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D220",
-          n: "BOTELLA JACK DANIELS 750ML",
-          p: 465,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D224",
-          n: "BOTELLA MACALLAN 12 700ML",
-          p: 1681.33,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D226",
-          n: "BOTELLA MACALLAN 18 700ML",
-          p: 8283,
-          a: 0.6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D231",
-          n: "BOTELLA TOKI 750ML",
-          p: 810,
-          a: 0.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D236",
-          n: "BOTELLA LICOR ST GERMAIN 750ML",
-          p: 949,
-          a: 0.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D252",
-          n: "BOTELLA FERNET BRANCA 750ML",
-          p: 499,
-          a: 0.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D253",
-          n: "BOTELLA CONTROY 750ML",
-          p: 222.34,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D277",
-          n: "BOTELLA KALUHA 1 LT",
-          p: 189,
-          a: 1.1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D299",
-          n: "BOTELLA MAYENDA BLANCO 750ML",
-          p: 946,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D307",
-          n: "BOTELLA ELITE 700ML",
-          p: 845,
-          a: 0.8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D317",
-          n: "BOTELLA ABSOLUT SMOKY PIÑA 750ML",
-          p: 336.5,
-          a: 0.9,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D323",
-          n: "BOTELLA TANQUERAY BOSSA NOVA 700ML",
-          p: 580.17,
-          a: 2.2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D326",
-          n: "BOTELLA BUCHANANS PINEAPPLE 750ML",
-          p: 820,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D327",
-          n: "BOTELLA YAMAZAKI 12 YEARS 700ML",
-          p: 7560,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D328",
-          n: "BOTELLA EL TESORO BLANCO 750ML",
-          p: 2217,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D339",
-          n: "BOTELLA BUFFALO TRACE BOURBON 750ML",
-          p: 599,
-          a: 1.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D341",
-          n: "BOTELLA ALMAVE AMBAR 750ML",
-          p: 609,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D344",
-          n: "BOTELLA ABSOLUT EXTRACT 750ML",
-          p: 374,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "D346",
-          n: "BOTELLA VERMUT ROSADO IZAGUIRRE 750ML",
-          p: 580.17,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      "Cervezas y Refrescos": [{
-          id: "P0855",
-          n: "CORONA DE VIDRIO 24PZA",
-          p: 14.14,
-          a: 96,
-          b: 26,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0857",
-          n: "CORONA LIGHT VIDRIO 24PZA",
-          p: 16,
-          a: 44,
-          b: 12,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0858",
-          n: "CORONA ZERO 24PZA",
-          p: 25,
-          a: 48,
-          b: 15,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0909",
-          n: "PACIFICO DE VIDRIO 24PZA",
-          p: 16.1,
-          a: 48,
-          b: 19,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0936",
-          n: "STELLA VIDRIO 24PZA",
-          p: 19.16,
-          a: 24,
-          b: 11,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0939",
-          n: "ULTRA DE VIDRIO 24PZA",
-          p: 18.47,
-          a: 48,
-          b: 14,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0947",
-          n: "VICTORIA VIDRIO 24PZA",
-          p: 14.14,
-          a: 0,
-          b: 39,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1729",
-          n: "MODELO ESPECIAL DE VIDRIO 12PZA",
-          p: 17.87,
-          a: 96,
-          b: 23,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1730",
-          n: "NEGRA MODELO DE VIDRIO 12PZA",
-          p: 18.62,
-          a: 120,
-          b: 22,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0837",
-          n: "AGUA MINERAL CIEL MINI 235ML 12PZA",
-          p: 19,
-          a: 12,
-          b: 15,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0838",
-          n: "AGUA MINERAL CIEL 355ML LATA 12PZA",
-          p: 21,
-          a: 60,
-          b: 22,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0841",
-          n: "AGUA NATURALCIEL PET 355ML 12PZA",
-          p: 10,
-          a: 48,
-          b: 18,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0845",
-          n: "COCA REGULAR 235ML 24PZA",
-          p: 22,
-          a: 36,
-          b: 8,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0846",
-          n: "COCA REGULAR 355ML 12PZA",
-          p: 22,
-          a: 60,
-          b: 16,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0849",
-          n: "COCA COLA LIGHT 355ML 12PZA",
-          p: 21,
-          a: 30,
-          b: 9,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0851",
-          n: "COCA COLA SIN AZUCAR 355ML 12PZA",
-          p: 21,
-          a: 36,
-          b: 16,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0873",
-          n: "FANTA NARANJA 355ML 12PZA",
-          p: 22,
-          a: 8,
-          b: 7,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0877",
-          n: "GINGER ALE SCHWEPPES 235ML",
-          p: 14,
-          a: 24,
-          b: 3,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0878",
-          n: "GRANADINA MADRILEÑA 1 LT",
-          p: 63,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0919",
-          n: "AGUA SAN PELLEGRINO 250ML 6PZ",
-          p: 24,
-          a: 30,
-          b: 3,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0930",
-          n: "SPRITE LATA 355ML 12PZA",
-          p: 22,
-          a: 24,
-          b: 7,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0937",
-          n: "AGUA MINERAL TOPO CHICO 355ML 24PZA",
-          p: 22,
-          a: 48,
-          b: 5,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1770",
-          n: "VELVET SODA GUANABANA 275ML 24PZA",
-          p: 35.41,
-          a: 48,
-          b: 7,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1772",
-          n: "VELVET SODA MARACUYA 275ML 24PZA",
-          p: 35.41,
-          a: 20,
-          b: 8,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1774",
-          n: "VELVET SODA PEPINO LIMON 275ML 24PZA",
-          p: 35.41,
-          a: 57,
-          b: 9,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1775",
-          n: "VELVET SODA TANGERINA 275ML 24PZA",
-          p: 35.41,
-          a: 35,
-          b: 10,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2130",
-          n: "VELVET SODA POMELO 275ML 24PZA",
-          p: 35.41,
-          a: 37,
-          b: 10,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      Vinos: [{
-          id: "V003",
-          n: "BOTELLA ALAMOS MALBEC 750ML",
-          p: 383,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V006",
-          n: "BOTELLA FINCA LA LINDA MALBEC 750ML",
-          p: 312.8,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V009",
-          n: "BOTELLA LUIGI BOSCA MALBEC 750ML",
-          p: 576,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V050",
-          n: "BOTELLA ALION TEMPRANILLO 750ML",
-          p: 2760,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V056",
-          n: "BOTELLA BERONIA CRIANZA 750ML",
-          p: 250,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V064",
-          n: "BOTELLA EL CIRCO TEMPRANILLO 750ML",
-          p: 198,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V066",
-          n: "BOTELLA EL NIÑO 750ML",
-          p: 373,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V073",
-          n: "BOTELLA MARQUES DE CACERES 750ML",
-          p: 355,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V075",
-          n: "BOTELLA MARQUES DE RISCAL 750ML",
-          p: 637.06,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V082",
-          n: "BOTELLA MONTEABELLON 5 MESES 750ML",
-          p: 299,
-          a: 8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V083",
-          n: "BOTELLA NUMANTHIA TINTA DE TORO 750ML",
-          p: 1591.42,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V105",
-          n: "BOTELLA MOET & CHANDON BRUT IMPERIAL",
-          p: 1401.13,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V107",
-          n: "BOTELLA MOET & CHANDON ROSE IMPERIAL",
-          p: 1688.48,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V115",
-          n: "BOTELLA CASA MADERO 3V 750ML",
-          p: 440,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V116",
-          n: "BOTELLA CASA MADERO 3V GRAN RESERVA",
-          p: 970,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V125",
-          n: "BOTELLA DUETTO SANTO TOMAS 750ML",
-          p: 1757.51,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V135",
-          n: "BOTELLA LA CETTO CABERNET SAUVIGNON",
-          p: 161.33,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V140",
-          n: "BOTELLA MARIA TINTO 750ML",
-          p: 627,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V157",
-          n: "BOTELLA CASA MADERO V ROSADO 750ML",
-          p: 325.5,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V224",
-          n: "BOTELLA CINZANO PROSECCO 750ML",
-          p: 353.65,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V254",
-          n: "BOTELLA LOUIS ROEDERER COLECTION 750ML",
-          p: 2055,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V299",
-          n: "BOTELLA KURDO BODEGAS 750ML",
-          p: 545,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "V300",
-          n: "BOTELLA CARAMELO RODERO 750ML",
-          p: 599,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      Lacteos: [{
-          id: "P0860",
-          n: "CREMA ACIDA LYNCOTT 5 LT",
-          p: 358.6,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0868",
-          n: "CREMA PARA BATIR LYNCOTT 980ML",
-          p: 89,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1988",
-          n: "CREMA PARA BATIR PURE LYNCOTT 4 LT",
-          p: 232.2,
-          a: 4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2080",
-          n: "CREMA PARA BATIR VERSATIE LACTEA 1 LT",
-          p: 95.5,
-          a: 6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0630",
-          n: "QUESO BURRATA BELGIOIOSO 450GR",
-          p: 240,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1997",
-          n: "QUESO CABRA CENIZA LYNCOTT 280GR",
-          p: 67,
-          a: 5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0635",
-          n: "QUESO CREMA CREAMY & SOFT 8KG",
-          p: 1296,
-          a: 6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2031",
-          n: "QUESO MANCHEGO PRIME LYNCOTT 3 KG",
-          p: 163,
-          a: 10.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0645",
-          n: "QUESO MASCARPONE BELGIOIOSO 453GR",
-          p: 158,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2040",
-          n: "QUESO MOZARELLA 453GR",
-          p: 108,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P2032",
-          n: "QUESO PARMESANO RAYADO LYNCOTT 2.27KG",
-          p: 550,
-          a: 2.27,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0651",
-          n: "QUESO PROVOLETA 1 KG",
-          p: 225,
-          a: 12,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      Carnes: [{
-          id: "P0060",
-          n: "ARRACHERA LONJA KILO",
-          p: 300,
-          a: 7.466,
-          b: 13.8,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0067",
-          n: "SHORT RIB ASADO 1 KG",
-          p: 487,
-          a: 7.4,
-          b: 0.78,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0111",
-          n: "CABRERIA 1 KG",
-          p: 503,
-          a: 1.536,
-          b: 2.5,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0208",
-          n: "CHISTORRA 1 KG",
-          p: 144,
-          a: 0.9,
-          b: 2.5,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0219",
-          n: "CHORIZO ARGENTINO 1 KG",
-          p: 172,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0272",
-          n: "COWBOY KILO",
-          p: 745,
-          a: 2.5,
-          b: 3.7,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0475",
-          n: "MOLLEJA 1 KG DE RES IBP",
-          p: 165,
-          a: 6.6,
-          b: 2.472,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0493",
-          n: "NEW YORK 0X1 CAB",
-          p: 505,
-          a: 6.8,
-          b: 7.4,
-          c: 0.482,
-          pr: 0,
-        },
-        {
-          id: "P0583",
-          n: "PICAÑA 1 KG",
-          p: 380,
-          a: 9,
-          b: 2.7,
-          c: 3,
-          pr: 0
-        },
-        {
-          id: "P0661",
-          n: "RIB EYE CAB 1 KG",
-          p: 573,
-          a: 15.2,
-          b: 2.012,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0663",
-          n: "RIB EYE STERLING SILVER 1 KG",
-          p: 578,
-          a: 8,
-          b: 34.5,
-          c: 1.664,
-          pr: 0,
-        },
-        {
-          id: "P0665",
-          n: "RIB EYE WAGYU 300/500GR",
-          p: 1450,
-          a: 1.6,
-          b: 4,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0755",
-          n: "TOMAHAWK 1 KG XO",
-          p: 799,
-          a: 1,
-          b: 6,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0761",
-          n: "TOP SIRLOIN 1KG",
-          p: 220,
-          a: 2.3,
-          b: 2.784,
-          c: 6.2,
-          pr: 0,
-        },
-        {
-          id: "P0783",
-          n: "VACIO 1 KG",
-          p: 420,
-          a: 1.6,
-          b: 2.486,
-          c: 5.4,
-          pr: 0,
-        },
-        {
-          id: "P1754",
-          n: "TUETANO CORTE CAÑA 1 KILO",
-          p: 95,
-          a: 2.67,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      Mariscos: [{
-          id: "P0136",
-          n: "CAMARON 16-20 SIN GLAZE 1 KG",
-          p: 236,
-          a: 2.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0199",
-          n: "CHILEAN SEA BASS 1 KG",
-          p: 1063,
-          a: 0.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0513",
-          n: "OSTION PZ",
-          p: 40,
-          a: 1.6,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0621",
-          n: "PULPO 2-4 1 KG",
-          p: 310,
-          a: 0.6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1693",
-          n: "SALMON AHUMADO PRE FILETEADO 1 KG",
-          p: 465,
-          a: 1.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0687",
-          n: "SALMON EN LONJA FRESCO",
-          p: 298,
-          a: 2.9,
-          b: 1.634,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0075",
-          n: "ATUN IMPORTADO 1KG",
-          p: 215,
-          a: 3.8,
-          b: 1.336,
-          c: 0,
-          pr: 0,
-        },
-      ],
-      "Frutas y Verduras": [{
-          id: "P0031",
-          n: "AGUACATE 1 KG",
-          p: 45,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0056",
-          n: "APIO NACIONAL 1KG",
-          p: 40,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0066",
-          n: "ARUGULA BABY 1 KG",
-          p: 70,
-          a: 0.4,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0127",
-          n: "CALABACITA ITALIANA 1 KG",
-          p: 15,
-          a: 2.6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0156",
-          n: "CEBOLLA BLANCA 1 KG",
-          p: 12,
-          a: 10,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0159",
-          n: "CEBOLLA MORADA 1 KG",
-          p: 15,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0172",
-          n: "CHAMPIÑON BLANCO 1 KG",
-          p: 105,
-          a: 1,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0188",
-          n: "CHILE JALAPEÑO 1 KG",
-          p: 25,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0221",
-          n: "CILANTRO 1 KG",
-          p: 15,
-          a: 0.6,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0308",
-          n: "ESPINACA 1 KG",
-          p: 50,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0323",
-          n: "FRAMBUESA 1 KG DOMO 250GR",
-          p: 35,
-          a: 3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0324",
-          n: "FRESA 1 KG DOMO 454GR",
-          p: 110,
-          a: 1.5,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0384",
-          n: "JITOMATE BOLA 1 KG",
-          p: 35,
-          a: 6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0387",
-          n: "JITOMATE GUAJE/SALADET 1 KG",
-          p: 45,
-          a: 6,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1650",
-          n: "LECHUGA LARGA CORAZONES 500GR",
-          p: 70,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0424",
-          n: "LIMON CON SEMILLA 1 KG",
-          p: 40,
-          a: 2.7,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0426",
-          n: "LIMON S/SEMILLA 1 KG",
-          p: 45,
-          a: 8,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0487",
-          n: "NARANJA 1 KG",
-          p: 16,
-          a: 10,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0529",
-          n: "PAPA PARA FREIR 1KG",
-          p: 32,
-          a: 10,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0572",
-          n: "PEPINO 1 KG",
-          p: 22,
-          a: 1.4,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0593",
-          n: "PIMIENTO AMARILLO 1 KG",
-          p: 48,
-          a: 0.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0594",
-          n: "PIMIENTO ROJO MORRON 1 KG",
-          p: 48,
-          a: 0.3,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P1641",
-          n: "PLATANO 1 KG",
-          p: 23,
-          a: 1.5,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0703",
-          n: "SANDIA 1 KG",
-          p: 20,
-          a: 1.3,
-          b: 0,
-          c: 0,
-          pr: 0
-        },
-        {
-          id: "P0810",
-          n: "ZANAHORIA 1 KG",
-          p: 15,
-          a: 1.2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-        {
-          id: "P0814",
-          n: "ZARZAMORAS 1 KG DOMO 250GR",
-          p: 30,
-          a: 2,
-          b: 0,
-          c: 0,
-          pr: 0,
-        },
-      ],
+
+    // ─── API LAYER ───
+    const _api = {
+      get: u => fetch(u).then(r => r.json()),
+      post: (u, b) => fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(r => r.json()),
+      put: (u, b) => fetch(u, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(r => r.json()),
+      del: u => fetch(u, { method: 'DELETE' }).then(r => r.json()),
     };
+
+    let _loaded = false;
+    let _initialCatTotals = {};
 
     let S = {
       periodos: [],
@@ -3396,48 +1289,68 @@
       counts: {},
       compras: {},
       catalog: null,
+      ventas: {},
     };
 
-    function loadS() {
-      try {
-        const d = localStorage.getItem("ea_inv_v3");
-        if (d) S = {
-          ...S,
-          ...JSON.parse(d)
-        };
-      } catch (e) {}
-      if (!S.periodos.length) initDef();
-      if (!S.catalog) S.catalog = JSON.parse(JSON.stringify(BASE));
-    }
+    async function loadState(targetPid) {
+      const periodos = await _api.get('/api/periodos');
+      S.periodos = periodos;
+      if (!periodos.length) return;
+      S.pid = targetPid || periodos[0].id;
 
-    function saveS() {
-      localStorage.setItem("ea_inv_v3", JSON.stringify(S));
-    }
+      const st = await _api.get('/api/state/' + S.pid);
 
-    function initDef() {
-      const id = "P" + Date.now();
-      S.periodos.unshift({
-        id,
-        nombre: "Marzo 2026 — Semana 1",
-        fecha: "2026-03-01",
-        closed: false,
-      });
-      S.pid = id;
-      S.counts[id] = {};
-      for (const [cat, prods] of Object.entries(BASE)) {
-        for (const p of prods) {
-          const k = p.id || p.n;
-          const t = (p.a || 0) + (p.b || 0) + (p.c || 0) + (p.pr || 0);
-          if (t > 0)
-            S.counts[id][k] = {
-              a: p.a || 0,
-              b: p.b || 0,
-              c: p.c || 0,
-              pr: p.pr || 0,
-            };
-        }
+      S.catalog = {};
+      for (const p of st.productos) {
+        if (!S.catalog[p.categoria]) S.catalog[p.categoria] = [];
+        S.catalog[p.categoria].push({
+          id: p.id, n: p.nombre, p: parseFloat(p.precio),
+          presentacion: p.presentacion || '', unidad: p.unidad || ''
+        });
       }
-      saveS();
+
+      S.counts[S.pid] = {};
+      for (const c of st.conteos) {
+        S.counts[S.pid][c.producto_id] = {
+          a: parseFloat(c.almacen) || 0, b: parseFloat(c.barra) || 0,
+          c: parseFloat(c.cocina) || 0, pr: parseFloat(c.produccion) || 0
+        };
+      }
+
+      S.compras[S.pid] = st.compras.map(function(c) {
+        return {
+          _id: c.id, cat: c.categoria, monto: parseFloat(c.monto),
+          desc: c.descripcion || '', fecha: c.fecha ? c.fecha.split('T')[0] : ''
+        };
+      });
+
+      var pcts = (st.ventasConfig && st.ventasConfig.pcts) ? st.ventasConfig.pcts : Object.assign({}, PCT_DEF);
+      S.ventas[S.pid] = {
+        dias: st.ventas.map(function(v) {
+          return {
+            _id: v.id, fecha: v.fecha ? v.fecha.split('T')[0] : '',
+            monto: parseFloat(v.monto), nota: v.nota || ''
+          };
+        }),
+        pcts: pcts
+      };
+
+      // Load initial period totals for Cierre comparison
+      var firstPeriod = S.periodos[S.periodos.length - 1];
+      if (firstPeriod) {
+        _initialCatTotals = await _api.get('/api/totals/' + firstPeriod.id);
+      }
+
+      _loaded = true;
+    }
+
+    function _syncCount(k) {
+      var pid = S.pid;
+      var cnt = S.counts[pid] && S.counts[pid][k];
+      if (!cnt) return;
+      _api.put('/api/conteos/' + pid + '/' + k, {
+        almacen: cnt.a, barra: cnt.b, cocina: cnt.c, produccion: cnt.pr
+      });
     }
     const gc = (pid, k) =>
       (S.counts[pid] && S.counts[pid][k]) || {
@@ -3455,7 +1368,7 @@
       const r = {
         _t: 0
       };
-      for (const [c, prods] of Object.entries(S.catalog || BASE)) {
+      for (const [c, prods] of Object.entries(S.catalog || {})) {
         let s = 0;
         for (const p of prods) {
           s += sc(gc(pid, p.id || p.n)) * p.p;
@@ -3481,7 +1394,8 @@
       document.getElementById("gtbar").style.display = "none";
     }
 
-    function enterRole(r) {
+    async function enterRole(r) {
+      if (!_loaded) await loadState();
       role = r;
       document
         .querySelectorAll(".screen")
@@ -3542,7 +1456,7 @@
       const pid = S.pid,
         sr = document.getElementById("csearch").value.toLowerCase(),
         ars = ALIST[role] || ["b"],
-        prods = (S.catalog || BASE)[cCat] || [];
+        prods = (S.catalog || {})[cCat] || [];
       let h = "";
       for (const p of prods.filter(
           (p) => !sr || p.n.toLowerCase().includes(sr),
@@ -3576,7 +1490,7 @@
         0,
         Math.round(((S.counts[pid][k][ar] || 0) + d) * 10) / 10,
       );
-      saveS();
+      _syncCount(k);
       ctx === "c" ? renderCList() : renderGL();
     }
 
@@ -3590,7 +1504,7 @@
         pr: 0
       };
       S.counts[pid][k][ar] = Math.max(0, parseFloat(v) || 0);
-      saveS();
+      _syncCount(k);
       ctx === "c" ? updCT(role) : updGTB();
     }
 
@@ -3599,7 +1513,7 @@
         ars = ALIST[r] || ["b"];
       let t = 0,
         i = 0;
-      for (const prods of Object.values(S.catalog || BASE)) {
+      for (const prods of Object.values(S.catalog || {})) {
         for (const p of prods) {
           const k = p.id || p.n,
             cnt = gc(pid, k),
@@ -3657,7 +1571,7 @@
         h += `<button class="chip${pCatF === c ? " active" : ""}" onclick="setPCF('${c}',this)">${c}</button>`;
       });
       h += `</div><div class="plist" id="plinner">`;
-      const cat = S.catalog || BASE;
+      const cat = S.catalog || {};
       const pid = S.pid;
       for (const [c, prods] of Object.entries(cat)) {
         if (pCatF !== "__all__" && c !== pCatF) continue;
@@ -3701,8 +1615,7 @@
       document.getElementById("mprod").style.display = "flex";
     }
 
-    function saveProd() {
-      if (!S.catalog) S.catalog = JSON.parse(JSON.stringify(BASE));
+    async function saveProd() {
       const n = document.getElementById("mpnm").value.trim(),
         id = document.getElementById("mpid").value.trim(),
         p = parseFloat(document.getElementById("mppx").value) || 0,
@@ -3712,35 +1625,23 @@
         key = document.getElementById("mpkey").value;
       if (!n) return;
       if (key === "__new__") {
-        if (!S.catalog[cat]) S.catalog[cat] = [];
-        S.catalog[cat].push({
-          id,
-          n,
-          p,
-          a: 0,
-          b: 0,
-          c: 0,
-          pr: 0,
-          presentacion: pres,
-          unidad: un,
+        const result = await _api.post('/api/productos', {
+          id, nombre: n, categoria: cat, precio: p, presentacion: pres, unidad: un
         });
+        if (!S.catalog[cat]) S.catalog[cat] = [];
+        S.catalog[cat].push({ id: result.id || id, n, p, presentacion: pres, unidad: un });
       } else {
+        await _api.put('/api/productos/' + key, {
+          nombre: n, categoria: cat, precio: p, presentacion: pres, unidad: un
+        });
         for (const prods of Object.values(S.catalog)) {
           const i = prods.findIndex((p) => (p.id || p.n) === key);
           if (i >= 0) {
-            prods[i] = {
-              ...prods[i],
-              n,
-              id,
-              p,
-              presentacion: pres,
-              unidad: un,
-            };
+            prods[i] = { ...prods[i], n, id, p, presentacion: pres, unidad: un };
             break;
           }
         }
       }
-      saveS();
       document.getElementById("mprod").style.display = "none";
       renderCP();
     }
@@ -3765,26 +1666,27 @@
       document.getElementById("cRegC").innerHTML = h;
     }
 
-    function addC() {
+    async function addC() {
       const pid = S.pid,
         m = parseFloat(document.getElementById("rmonto").value) || 0;
       if (m <= 0) return;
       if (!S.compras[pid]) S.compras[pid] = [];
-      S.compras[pid].push({
-        cat: document.getElementById("rcat").value,
-        monto: m,
-        desc: document.getElementById("rdesc").value.trim(),
-        fecha: document.getElementById("rfecha").value,
+      const cat = document.getElementById("rcat").value;
+      const desc = document.getElementById("rdesc").value.trim();
+      const fecha = document.getElementById("rfecha").value;
+      const result = await _api.post('/api/compras', {
+        periodo_id: pid, categoria: cat, monto: m, descripcion: desc, fecha: fecha
       });
-      saveS();
+      S.compras[pid].push({ _id: result.id, cat, monto: m, desc, fecha });
       renderCR();
     }
 
-    function delC(i) {
+    async function delC(i) {
       const pid = S.pid;
-      if (S.compras[pid]) {
+      if (S.compras[pid] && S.compras[pid][i]) {
+        const item = S.compras[pid][i];
+        if (item._id) await _api.del('/api/compras/' + item._id);
         S.compras[pid].splice(i, 1);
-        saveS();
         renderCR();
       }
     }
@@ -3869,7 +1771,7 @@
     function renderGL() {
       const pid = S.pid,
         sr = document.getElementById("gsearch").value.toLowerCase(),
-        prods = (S.catalog || BASE)[gCat] || [],
+        prods = (S.catalog || {})[gCat] || [],
         ars = gArea === "all" ? ["a", "b", "c", "pr"] : [gArea];
       let h = "";
       for (const p of prods.filter(
@@ -3917,11 +1819,7 @@
         per = S.periodos.find((p) => p.id === pid);
       const ci = {};
       CATS_ALL.forEach((c) => {
-        ci[c] = (BASE[c] || []).reduce(
-          (s, p) =>
-          s + ((p.a || 0) + (p.b || 0) + (p.c || 0) + (p.pr || 0)) * p.p,
-          0,
-        );
+        ci[c] = (_initialCatTotals && _initialCatTotals[c]) || 0;
       });
       let h = `<p class="stitle">Cierre — ${per ? per.nombre : ""}</p><div class="kgrid"><div class="kpi"><div class="klbl">Inv. inicial Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div><div class="kpi"><div class="klbl">Compras periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. actual</div><div class="kval sm">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">Variación neta</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div>`;
       CATS_ALL.forEach((c, i) => {
@@ -3947,9 +1845,9 @@
       document.getElementById("gHist").innerHTML = h;
     }
 
-    function setAP(id) {
+    async function setAP(id) {
       S.pid = id;
-      saveS();
+      await loadState(id);
       renderGH();
       renderGD();
     }
@@ -3961,21 +1859,13 @@
       document.getElementById("mper").style.display = "flex";
     }
 
-    function crearPer() {
+    async function crearPer() {
       const n = document.getElementById("mpn").value.trim(),
         f = document.getElementById("mpf").value;
       if (!n) return;
-      const id = "P" + Date.now(),
-        prev = S.counts[S.pid] || {};
-      S.periodos.unshift({
-        id,
-        nombre: n,
-        fecha: f,
-        closed: false
-      });
-      S.pid = id;
-      S.counts[id] = JSON.parse(JSON.stringify(prev));
-      saveS();
+      const id = "P" + Date.now();
+      const result = await _api.post('/api/periodos', { id, nombre: n, fecha: f });
+      await loadState(result.id || id);
       document.getElementById("mper").style.display = "none";
       renderGD();
       renderGH();
@@ -3984,7 +1874,7 @@
     // EXPORT
     function exportX() {
       const pid = S.pid,
-        cat = S.catalog || BASE,
+        cat = S.catalog || {},
         per = S.periodos.find((p) => p.id === pid),
         t = tots(pid);
       let csv = `"La Estancia Argentina León — Inventario"\n"${per ? per.nombre : ""}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n"Categoría","ID","Producto","Presentación","Almacén","Barra","Cocina","Producción","Total Unidades","Precio Unitario","Valor Total"\n`;
@@ -4337,7 +2227,7 @@
       setTimeout(() => document.getElementById("vmonto").focus(), 200);
     }
 
-    function saveVenta() {
+    async function saveVenta() {
       const pid = S.pid;
       const pv = getPV(pid);
       const fecha = document.getElementById("vfecha").value;
@@ -4345,44 +2235,32 @@
       const nota = document.getElementById("vnota").value.trim();
       const idx = parseInt(document.getElementById("vedit-idx").value);
       if (!monto || monto <= 0) return;
+      const result = await _api.post('/api/ventas', { periodo_id: pid, fecha, monto, nota });
       if (idx >= 0) {
-        pv.dias[idx] = {
-          fecha,
-          monto,
-          nota
-        };
+        pv.dias[idx] = { _id: result.id || pv.dias[idx]._id, fecha, monto, nota };
       } else {
-        // Check duplicate date
         const dup = pv.dias.findIndex((d) => d.fecha === fecha);
         if (dup >= 0) {
-          pv.dias[dup] = {
-            fecha,
-            monto,
-            nota
-          };
+          pv.dias[dup] = { _id: result.id || pv.dias[dup]._id, fecha, monto, nota };
         } else {
-          pv.dias.push({
-            fecha,
-            monto,
-            nota
-          });
+          pv.dias.push({ _id: result.id, fecha, monto, nota });
         }
         pv.dias.sort((a, b) => a.fecha.localeCompare(b.fecha));
       }
       if (!S.ventas) S.ventas = {};
       S.ventas[pid] = pv;
-      saveS();
       document.getElementById("mventa").style.display = "none";
       renderGV();
     }
 
-    function delVenta(i) {
+    async function delVenta(i) {
       const pid = S.pid;
       const pv = getPV(pid);
+      const item = pv.dias[i];
+      if (item && item._id) await _api.del('/api/ventas/' + item._id);
       pv.dias.splice(i, 1);
       if (!S.ventas) S.ventas = {};
       S.ventas[pid] = pv;
-      saveS();
       renderGV();
     }
 
@@ -4405,7 +2283,7 @@
       document.getElementById("mvproyectada").style.display = "flex";
     }
 
-    function saveProyectada() {
+    async function saveProyectada() {
       const pid = S.pid;
       const pv = getPV(pid);
       PRES_CATS.forEach((cat) => {
@@ -4414,7 +2292,7 @@
       });
       if (!S.ventas) S.ventas = {};
       S.ventas[pid] = pv;
-      saveS();
+      await _api.put('/api/ventas-config/' + pid, { pcts: pv.pcts });
       document.getElementById("mvproyectada").style.display = "none";
       renderGV();
     }
@@ -4497,7 +2375,6 @@
       a.click();
     }
 
-    loadS();
 
   </script>
 </body>
