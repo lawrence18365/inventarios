@@ -1,0 +1,4505 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Inventarios · La Estancia Argentina León</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0908;
+      --surface: #14130f;
+      --s2: #1c1b16;
+      --border: #2a2822;
+      --gold: #c9a54c;
+      --gold2: #e0c478;
+      --goldd: #7a6a38;
+      --red: #cf4f4f;
+      --green: #4db878;
+      --text: #ede8dc;
+      --muted: #736f64;
+      --r: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Outfit", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.02;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;
+      background-size: 200px 200px;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* LANDING */
+    #sl {
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #sl::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at center,
+          rgba(201, 165, 76, 0.06) 0%,
+          rgba(201, 165, 76, 0.02) 35%,
+          transparent 65%);
+      pointer-events: none;
+    }
+
+    .li {
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lorn {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--goldd);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .llogo {
+      font-family: "Fraunces", serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.05;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .llogo em {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 34px;
+    }
+
+    .lsub {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .lciu {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 44px;
+    }
+
+    .lprm {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .rgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .rc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 14px 18px;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.25s, box-shadow 0.25s;
+      text-align: center;
+      animation: cardIn 0.4s ease backwards;
+    }
+
+    .rc:nth-child(1) { animation-delay: 0.1s; }
+    .rc:nth-child(2) { animation-delay: 0.2s; }
+    .rc:nth-child(3) { animation-delay: 0.3s; }
+
+    .rc:active {
+      transform: scale(0.96);
+    }
+
+    .rc.coc {
+      border-color: #3a2a1a;
+    }
+
+    .rc.coc:hover {
+      border-color: #e8a852;
+      background: #1a1208;
+    }
+
+    .rc.bar {
+      border-color: #1a2a3a;
+    }
+
+    .rc.bar:hover {
+      border-color: #5285e0;
+      background: #0e1520;
+    }
+
+    .rc.com {
+      border-color: #1a3a2a;
+    }
+
+    .rc.com:hover {
+      border-color: #52c87a;
+      background: #0e1e15;
+    }
+
+    .rcf {
+      grid-column: 1/-1;
+      background: linear-gradient(135deg, #1a1500, #0f0d00);
+      border: 1px solid var(--goldd);
+      border-radius: 16px;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+
+    .rcf:hover {
+      border-color: var(--gold);
+      background: #1f1800;
+    }
+
+    .rcf {
+      animation: cardIn 0.4s ease 0.4s backwards;
+    }
+
+    .rcf-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .rcf-name {
+      font-family: "Fraunces", serif;
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    .rcf-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .ri {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+
+    .ri svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .rc.coc .ri { background: rgba(232, 168, 82, 0.1); color: #e8a852; }
+    .rc.bar .ri { background: rgba(82, 133, 224, 0.1); color: #5285e0; }
+    .rc.com .ri { background: rgba(77, 184, 120, 0.1); color: #4db878; }
+
+    .rn {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .rd {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .rc.coc .rn {
+      color: #e8a852;
+    }
+
+    .rc.bar .rn {
+      color: #5285e0;
+    }
+
+    .rc.com .rn {
+      color: #52c87a;
+    }
+
+    .lft {
+      margin-top: 30px;
+      font-size: 11px;
+      color: #3a3a3a;
+    }
+
+    /* APP HEADER */
+    .ah {
+      background: rgba(20,19,15,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 11px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .ahr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .alogo {
+      font-family: "Fraunces", serif;
+      font-size: 15px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .alogo span {
+      display: block;
+      font-family: "Outfit", sans-serif;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .rbadge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .bcoc {
+      background: #2a1800;
+      color: #e8a852;
+    }
+
+    .bbar {
+      background: #0e1a2e;
+      color: #5285e0;
+    }
+
+    .bcom {
+      background: #0e2018;
+      color: #52c87a;
+    }
+
+    .bgm {
+      background: #1a1400;
+      color: var(--gold);
+    }
+
+    .btnback {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 11px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .tabbar {
+      display: flex;
+      gap: 3px;
+      overflow-x: auto;
+      padding: 9px 16px 0;
+      scrollbar-width: none;
+      border-bottom: 1px solid var(--border);
+      margin-top: 9px;
+    }
+
+    .tabbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      padding: 7px 14px;
+      border-radius: 8px 8px 0 0;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      border-bottom: none;
+      color: var(--muted);
+      background: transparent;
+      font-family: inherit;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .tab.active {
+      background: var(--s2);
+      border-color: var(--border);
+      color: var(--gold);
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 8px;
+      right: 8px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* MAIN */
+    .main {
+      padding: 14px 16px;
+      max-width: 900px;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .stitle {
+      font-family: "Fraunces", serif;
+      font-size: 19px;
+      margin-bottom: 13px;
+    }
+
+    .kgrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 13px;
+    }
+
+    .klbl {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .kval {
+      font-family: "Fraunces", serif;
+      font-size: 21px;
+      color: var(--gold);
+    }
+
+    .kval.sm {
+      font-size: 15px;
+    }
+
+    .ksub {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .catsum {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .crow {
+      display: flex;
+      align-items: center;
+      padding: 10px 13px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.1s;
+      gap: 9px;
+    }
+
+    .crow:last-child {
+      border-bottom: none;
+    }
+
+    .crow:hover {
+      background: var(--s2);
+    }
+
+    .cdot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cname {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .citems {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .cval {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .cbar {
+      width: 100%;
+      background: var(--border);
+      height: 3px;
+      border-radius: 2px;
+      margin-top: 5px;
+    }
+
+    .cbarfill {
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .sw {
+      position: relative;
+      margin-bottom: 11px;
+    }
+
+    .sw input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 13px 9px 34px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .sw input:focus {
+      border-color: var(--gold);
+    }
+
+    .sw::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23736f64' stroke-width='2.5' stroke-linecap='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cline x1='15.5' y1='15.5' x2='21' y2='21'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+
+    .chips {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 11px;
+    }
+
+    .chip {
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .chip:hover:not(.active) {
+      color: var(--text);
+      border-color: #444;
+    }
+
+    .plist {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .pi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 11px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: border-color 0.15s;
+    }
+
+    .pi.hq {
+      border-color: #2a3a1a;
+      background: #0f1500;
+    }
+
+    .pn {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .pm {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .pinf {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .qctrl {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .qb {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--s2);
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.12s;
+      font-family: inherit;
+    }
+
+    .qb:hover {
+      background: var(--border);
+      border-color: #3a3830;
+    }
+
+    .qb:active {
+      transform: scale(0.88);
+      background: #3a3830;
+    }
+
+    .qi {
+      width: 50px;
+      height: 27px;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-align: center;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .qi:focus {
+      border-color: var(--gold);
+    }
+
+    .qv {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 12px;
+      min-width: 42px;
+      text-align: right;
+    }
+
+    .tbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(20,19,15,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      padding: 11px 18px;
+      padding-bottom: max(11px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .tbl {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .tba {
+      font-family: "Fraunces", serif;
+      font-size: 19px;
+      color: var(--gold);
+    }
+
+    .pbsafe {
+      height: 70px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 13px;
+      margin-bottom: 9px;
+    }
+
+    .ch {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 7px;
+    }
+
+    .ct {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .cs {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .cv {
+      font-family: "Fraunces", serif;
+      font-size: 17px;
+      color: var(--gold);
+    }
+
+    .frow {
+      display: flex;
+      gap: 7px;
+      align-items: flex-end;
+      margin-bottom: 9px;
+      flex-wrap: wrap;
+    }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+      min-width: 110px;
+    }
+
+    .fg label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      width: 100%;
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btns button {
+      flex: 1;
+      padding: 11px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+
+    .bcancel {
+      background: var(--s2);
+      color: var(--muted);
+    }
+
+    .bconfirm {
+      background: var(--gold);
+      color: #0a0908;
+      border-color: var(--gold);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+
+    .bconfirm:hover {
+      background: var(--gold2);
+      box-shadow: 0 2px 12px rgba(201,165,76,0.25);
+    }
+
+    .bsm {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .bsm:hover {
+      background: var(--border);
+    }
+
+    .bsm.g {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    .bsm.g:hover {
+      background: var(--gold2);
+    }
+
+    .es {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .du {
+      color: var(--green);
+    }
+
+    .dd {
+      color: var(--red);
+    }
+
+    .de {
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    .topen {
+      background: #0f2018;
+      color: var(--green);
+    }
+
+    .tclosed {
+      background: #222;
+      color: var(--muted);
+    }
+
+    .molay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fi 0.2s;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px max(30px, env(safe-area-inset-bottom));
+      width: 100%;
+      max-width: 460px;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+      animation: su 0.25s;
+    }
+
+    .modal h3 {
+      font-family: "Fraunces", serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .page {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes fi {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes su {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card hover glow */
+    .rc.coc:hover { box-shadow: 0 0 20px rgba(232,168,82,0.08); }
+    .rc.bar:hover { box-shadow: 0 0 20px rgba(82,133,224,0.08); }
+    .rc.com:hover { box-shadow: 0 0 20px rgba(77,184,120,0.08); }
+
+    /* Better focus states */
+    .fg input:focus, .fg select:focus, .fg textarea:focus,
+    .sw input:focus, .qi:focus {
+      box-shadow: 0 0 0 2px rgba(201,165,76,0.15);
+    }
+
+    /* Product item hover */
+    .pi { transition: border-color 0.15s, background 0.15s; }
+    .pi:hover { border-color: var(--border); background: var(--s2); }
+
+    /* Smooth screen transitions */
+    .screen.active { animation: fi 0.2s ease; }
+
+    /* Chip active state refinement */
+    .chip.active { box-shadow: 0 1px 6px rgba(201,165,76,0.2); }
+
+    /* KPI card subtle border top accent */
+    .kpi { border-top: 2px solid transparent; transition: border-color 0.2s; }
+    .kpi:hover { border-top-color: var(--goldd); }
+
+    /* Landing footer */
+    .lft {
+      opacity: 0;
+      animation: fi 0.5s ease 0.6s forwards;
+    }
+
+    /* Better scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* Edit icon button alignment */
+    .bsm svg { vertical-align: middle; }
+
+  </style>
+</head>
+
+<body>
+  <!-- LANDING -->
+  <div id="sl" class="screen active">
+    <div class="li">
+      <div class="lorn">Grupo Estancia</div>
+      <div class="llogo">La Estancia<br /><em>Argentina</em></div>
+      <div class="lsub">Sistema de Inventarios</div>
+      <div class="lciu">León, Guanajuato</div>
+      <div class="lprm">Selecciona tu acceso</div>
+      <div class="rgrid">
+        <div class="rc coc" onclick="enterRole('cocina')">
+          <div class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 4.5-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-4-6.5-6-11z"/><path d="M10 13a2 2 0 0 0 4 0c0-1.5-2-2.5-2-4-.7 1.2-2 2-2 4z"/></svg></div>
+          <div class="rn">Cocina</div>
+          <div class="rd">Carnes, mariscos, verduras, lacteos</div>
+        </div>
+        <div class="rc bar" onclick="enterRole('barra')">
+          <div class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-2 8H10L8 2z"/><line x1="12" y1="10" x2="12" y2="18"/><line x1="8" y1="18" x2="16" y2="18"/></svg></div>
+          <div class="rn">Barra</div>
+          <div class="rd">Destilados, vinos y refrescos</div>
+        </div>
+        <div class="rc com" onclick="enterRole('compras')" style="grid-column: 1/-1">
+          <div class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div>
+          <div class="rn">Compras</div>
+          <div class="rd">Gestiona productos, precios, presentaciones y registra compras del periodo</div>
+        </div>
+      </div>
+      <div class="rcf" onclick="enterRole('gm')">
+        <div class="ri" style="background:rgba(201,165,76,0.12);color:var(--gold);flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 17l2-10 5 4 2-6 2 6 5-4 2 10H3z"/><rect x="3" y="17" width="18" height="3" rx="1"/></svg></div>
+        <div class="rcf-text">
+          <div class="rcf-name">Gerencia General</div>
+          <div class="rcf-desc">Dashboard / todos los rubros / exportar Excel</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--goldd)" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+      <div class="lft">v2.1 · La Estancia Argentina León</div>
+    </div>
+  </div>
+
+  <!-- COCINA / BARRA -->
+  <div id="sc" class="screen">
+    <div class="ah">
+      <div class="ahr">
+        <div class="alogo">La Estancia Argentina <span>León</span></div>
+        <div style="display: flex; gap: 5px; align-items: center">
+          <span class="rbadge" id="cbadge">Cocina</span>
+          <button class="btnback" onclick="goLanding()">← Salir</button>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="chips" id="ccatchips"></div>
+      <div class="sw">
+        <input type="text" id="csearch" placeholder="Buscar producto..." oninput="renderCList()" />
+      </div>
+      <div id="cplist" class="plist"></div>
+      <div class="pbsafe"></div>
+    </div>
+    <div class="tbar">
+      <div>
+        <div class="tbl">Tu área</div>
+        <div class="tba" id="ctotal">$0</div>
+      </div>
+      <div style="text-align: right">
+        <div class="tbl" id="citems">0 productos</div>
+        <div class="tbl" id="cper">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPRAS -->
+  <div id="scom" class="screen">
+    <div class="ah">
+      <div class="ahr">
+        <div class="alogo">La Estancia Argentina <span>León</span></div>
+        <div style="display: flex; gap: 5px; align-items: center">
+          <span class="rbadge bcom">Compras</span>
+          <button class="btnback" onclick="goLanding()">← Salir</button>
+        </div>
+      </div>
+      <div class="tabbar">
+        <button class="tab active" onclick="showCT('inv', this)">
+          Inventario
+        </button>
+        <button class="tab" onclick="showCT('prod', this)">Productos</button>
+        <button class="tab" onclick="showCT('reg', this)">Compras</button>
+      </div>
+    </div>
+    <div class="main">
+      <div id="cp-inv" class="page active">
+        <div id="cInvC"></div>
+        <div class="pbsafe"></div>
+      </div>
+      <div id="cp-prod" class="page">
+        <div id="cProdC"></div>
+        <div class="pbsafe"></div>
+      </div>
+      <div id="cp-reg" class="page">
+        <div id="cRegC"></div>
+        <div class="pbsafe"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GM -->
+  <div id="sgm" class="screen">
+    <div class="ah">
+      <div class="ahr">
+        <div class="alogo">La Estancia Argentina <span>León · GM</span></div>
+        <div style="display: flex; gap: 5px; align-items: center">
+          <span class="rbadge bgm">GM</span>
+          <button class="btnback" onclick="goLanding()">← Salir</button>
+        </div>
+      </div>
+      <div class="tabbar">
+        <button class="tab active" onclick="showGT('dash', this)">
+          Dashboard
+        </button>
+        <button class="tab" onclick="showGT('ventas', this)">Ventas</button>
+        <button class="tab" onclick="showGT('cap', this)">Captura</button>
+        <button class="tab" onclick="showGT('cierre', this)">Cierre</button>
+        <button class="tab" onclick="showGT('hist', this)">Histórico</button>
+      </div>
+    </div>
+    <div class="main">
+      <div id="gp-dash" class="page active">
+        <div id="gDash"></div>
+      </div>
+      <div id="gp-ventas" class="page">
+        <div id="gVentas"></div>
+        <div class="pbsafe"></div>
+      </div>
+      <div id="gp-cap" class="page">
+        <div class="chips" id="gcatchips"></div>
+        <div class="chips" id="gareachips">
+          <button class="chip active" onclick="setGA('all', this)">
+            Todas
+          </button>
+          <button class="chip" onclick="setGA('a', this)">Almacén</button>
+          <button class="chip" onclick="setGA('b', this)">Barra</button>
+          <button class="chip" onclick="setGA('c', this)">Cocina</button>
+        </div>
+        <div class="sw">
+          <input type="text" id="gsearch" placeholder="Buscar..." oninput="renderGL()" />
+        </div>
+        <div id="gplist" class="plist"></div>
+        <div class="pbsafe"></div>
+      </div>
+      <div id="gp-cierre" class="page">
+        <div id="gCierre"></div>
+        <div class="pbsafe"></div>
+      </div>
+      <div id="gp-hist" class="page">
+        <div id="gHist"></div>
+      </div>
+    </div>
+    <div class="tbar" id="gtbar" style="display: none">
+      <div>
+        <div class="tbl">Total inventario</div>
+        <div class="tba" id="gtotal">$0</div>
+      </div>
+      <div style="text-align: right">
+        <div class="tbl" id="gitems">0 productos</div>
+        <div class="tbl" id="gper">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL VENTA DIARIA -->
+  <div id="mventa" style="display: none" class="molay" onclick="if (event.target === this) this.style.display = 'none';">
+    <div class="modal">
+      <h3>Registrar Venta Diaria</h3>
+      <div class="frow">
+        <div class="fg">
+          <label>Fecha</label><input type="date" id="vfecha" />
+        </div>
+        <div class="fg">
+          <label>Venta del día ($)</label><input type="number" id="vmonto" placeholder="0.00" step="0.01" />
+        </div>
+      </div>
+      <div class="fg" style="margin-bottom: 12px">
+        <label>Nota (opcional)</label><input id="vnota" placeholder="ej. Viernes especial, evento privado..." />
+      </div>
+      <input type="hidden" id="vedit-idx" value="-1" />
+      <div class="btns">
+        <button class="bcancel" onclick="document.getElementById('mventa').style.display = 'none'">
+          Cancelar
+        </button>
+        <button class="bconfirm" onclick="saveVenta()">Guardar</button>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL VENTA PROYECTADA -->
+  <div id="mvproyectada" style="display: none" class="molay" onclick="if (event.target === this) this.style.display = 'none';">
+    <div class="modal">
+      <h3>Configurar Mes</h3>
+      <div class="frow">
+        <div class="fg" style="flex: 2">
+          <label>Venta proyectada del mes ($)</label><input type="number" id="vproyectada" placeholder="0.00" step="0.01" />
+        </div>
+      </div>
+      <div style="margin-bottom: 12px; font-size: 12px; color: var(--muted)">
+        Porcentajes de costo por categoría (editables):
+      </div>
+      <div id="pct-editor"></div>
+      <div class="btns" style="margin-top: 14px">
+        <button class="bcancel" onclick="
+              document.getElementById('mvproyectada').style.display = 'none'
+            ">
+          Cancelar
+        </button>
+        <button class="bconfirm" onclick="saveProyectada()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mper" style="display: none" class="molay" onclick="if (event.target === this) this.style.display = 'none';">
+    <div class="modal">
+      <h3>Nuevo Periodo</h3>
+      <div class="frow">
+        <div class="fg" style="flex: 2">
+          <label>Nombre</label><input id="mpn" placeholder="Marzo 2026 — Semana 2" />
+        </div>
+        <div class="fg">
+          <label>Fecha</label><input type="date" id="mpf" />
+        </div>
+      </div>
+      <div class="btns">
+        <button class="bcancel" onclick="document.getElementById('mper').style.display = 'none'">
+          Cancelar
+        </button>
+        <button class="bconfirm" onclick="crearPer()">Crear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PRODUCTO -->
+  <div id="mprod" style="display: none" class="molay" onclick="if (event.target === this) this.style.display = 'none';">
+    <div class="modal">
+      <h3 id="mpt">Editar Producto</h3>
+      <div class="frow">
+        <div class="fg" style="flex: 2">
+          <label>Nombre</label><input id="mpnm" />
+        </div>
+        <div class="fg">
+          <label>ID</label><input id="mpid" placeholder="P0001" />
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label>Categoría</label><select id="mpcat"></select>
+        </div>
+        <div class="fg">
+          <label>Costo ($)</label><input type="number" id="mppx" step="0.01" />
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label>Presentación / Gramaje</label><input id="mppres" placeholder="750ml, 1 KG, 24 PZA..." />
+        </div>
+        <div class="fg">
+          <label>Unidad</label><input id="mpun" placeholder="Botella, Kg, Caja..." />
+        </div>
+      </div>
+      <input type="hidden" id="mpkey" />
+      <div class="btns" style="margin-top: 14px">
+        <button class="bcancel" onclick="document.getElementById('mprod').style.display = 'none'">
+          Cancelar
+        </button>
+        <button class="bconfirm" onclick="saveProd()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CC = [
+      "#c9a84c",
+      "#5285e0",
+      "#52c87a",
+      "#e05252",
+      "#e8a852",
+      "#a852e0",
+      "#52c8c8",
+      "#e0528a",
+    ];
+    const CATS_ALL = [
+      "Abarrotes",
+      "Destilados",
+      "Cervezas y Refrescos",
+      "Vinos",
+      "Lacteos",
+      "Carnes",
+      "Mariscos",
+      "Frutas y Verduras",
+    ];
+    const BARRA_C = [
+      "Destilados",
+      "Cervezas y Refrescos",
+      "Vinos",
+      "Abarrotes",
+    ];
+    const COCINA_C = [
+      "Carnes",
+      "Mariscos",
+      "Frutas y Verduras",
+      "Lacteos",
+      "Abarrotes",
+    ];
+    const INV0 = 334195;
+
+    const BASE = {
+      Abarrotes: [{
+          id: "P0002",
+          n: "ACEITE DE AJONJOLI BOTE KADOYA",
+          p: 670,
+          a: 0,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0015",
+          n: "ACEITE VEGETAL AVE 10 LT",
+          p: 750,
+          a: 1.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1748",
+          n: "ACEITUNA VERDE S/HUESO 935 GR",
+          p: 91.81,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0048",
+          n: "ALMENDRA ENTERA 1 KG",
+          p: 220.57,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0049",
+          n: "ALMENDRA FILETEADA 1 KG",
+          p: 280,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1808",
+          n: "ARANDANOS SECOS MEMBERS 1.02 KG",
+          p: 129,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0061",
+          n: "ARROZ 1 KG BOLSA",
+          p: 33.37,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1810",
+          n: "AZUCAR REFINADA ZULKA 1 KG",
+          p: 38.46,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0142",
+          n: "CANELA ENTERA 1 KG",
+          p: 360,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0206",
+          n: "CHILE CHIPOTLE .220 GR LA COSTEÑA",
+          p: 48.28,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0212",
+          n: "CHOCOLATE BLANCO TURIN 1 KG",
+          p: 253.14,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1805",
+          n: "CORAZONES DE ALCACHOFA SAN MIGUEL 420 GR",
+          p: 54.73,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1597",
+          n: "DULCE DE LECHE NESTLE LATA 360 ML",
+          p: 32.16,
+          a: 10,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0293",
+          n: "ELOTE DORADO COSTEÑA 400GR",
+          p: 18.47,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1706",
+          n: "ESPAGUETTI NO 5 BARILLA .501",
+          p: 24.42,
+          a: 9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0328",
+          n: "FRIJOL PERUANO 1 KG",
+          p: 77.74,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0336",
+          n: "GALLETAS MARIAS GAMESA 170 GR",
+          p: 13.95,
+          a: 18,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0340",
+          n: "GELATINA SABORES 120 GR SOBRE",
+          p: 12.39,
+          a: 8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0345",
+          n: "GLUTAMATO MONOSODICO 1KG AJINOMOTO",
+          p: 208,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0341",
+          n: "GRENETINA DUCHE 1 KG",
+          p: 233.14,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2025",
+          n: "HARINA 25 KG BULTO",
+          p: 434.28,
+          a: 0.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0368",
+          n: "HUEVO CAJA 30 PZS",
+          p: 558.23,
+          a: 0.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0891",
+          n: "JUGO DE ARANDANO 1LT",
+          p: 30.82,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0890",
+          n: "JUGO DE PIÑA 1LT",
+          p: 24.65,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0392",
+          n: "JUGO MAGGI 100 ML",
+          p: 35.59,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0405",
+          n: "LECHE CARNATION 1LT",
+          p: 54.06,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0406",
+          n: "LECHE CONDENSADA LA LECHERA 375G",
+          p: 28.56,
+          a: 6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0455",
+          n: "MAYONESA MCCORMICK 3.4KG",
+          p: 292.33,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0465",
+          n: "MIEL DE ABEJA CARLOTA 1.05 KG",
+          p: 153.54,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0477",
+          n: "MOSTAZA ANTIGÜA 865 GR MAILLE",
+          p: 197.58,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0480",
+          n: "MOSTAZA DIJON 865 GR",
+          p: 169.52,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0498",
+          n: "NUEZ EN MITADES 1KG",
+          p: 321.14,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1806",
+          n: "PALMITO ENTERO SAN MIGUEL 420 GR",
+          p: 60.01,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0589",
+          n: "PIMIENTA NEGRA ENTERA 520 GR",
+          p: 174.21,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0598",
+          n: "PIMIENTA NEGRA MOLIDA 510 GR",
+          p: 235.54,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0603",
+          n: "PIÑON BLANCO 1KG",
+          p: 600,
+          a: 0.25,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1827",
+          n: "POLVO ROYAL 220 GR",
+          p: 89,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0622",
+          n: "PURE DE TOMATE 3 LT BOLSA",
+          p: 81.7,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0698",
+          n: "SALSA TABASCO 60ML FRASCO",
+          p: 34.28,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0089",
+          n: "SPLENDA SOBRES CAJA 2000",
+          p: 295.09,
+          a: 0.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0371",
+          n: "TE MENTA EUROTE 50 GR",
+          p: 220,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0780",
+          n: "UVA PASA BOLSA 1 KILO",
+          p: 91.42,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0789",
+          n: "VINAGRE BALSAMICO 1 LT PIANELO",
+          p: 112.24,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0792",
+          n: "VINAGRE BLANCO 3.7 LT LA COSTEÑA",
+          p: 36.86,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0806",
+          n: "VINO BLANCO CALIFORNIA 1 LT",
+          p: 79,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2035",
+          n: "VINO TINTO CALIFORNIA 1 LT",
+          p: 79,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0948",
+          n: "YOGURTH DE FRESA 1 LT",
+          p: 41.5,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      Destilados: [{
+          id: "D001",
+          n: "BOTELLA ALMA DE MAGNO 700ML",
+          p: 519,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D003",
+          n: "BOTELLA CARDENAL DE MENDOZA 700ML",
+          p: 1133,
+          a: 0.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D007",
+          n: "BOTELLA JAIME I 700ML",
+          p: 3015,
+          a: 1.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D010",
+          n: "BOTELLA TERRY CENTENARIO 700ML",
+          p: 333.71,
+          a: 0.6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D014",
+          n: "BOTELLA 400 CONEJOS 750ML",
+          p: 449,
+          a: 1.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D015",
+          n: "BOTELLA AMARAS ESPADIN 750ML",
+          p: 613,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D018",
+          n: "BOTELLA AMARAS CUPREATA 750ML",
+          p: 899,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D025",
+          n: "BOTELLA MONTELOBOS ENSAMBLE 750ML",
+          p: 1095,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D026",
+          n: "BOTELLA MONTELOBOS ESPADIN 750ML",
+          p: 648,
+          a: 2.2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D037",
+          n: "BOTELLA BACARDI BLANCO 750ML",
+          p: 179.44,
+          a: 2.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D045",
+          n: "BOTELLA FLOR DE CAÑA EXTRA DRY 4 AÑOS",
+          p: 214.02,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D046",
+          n: "BOTELLA FLOR DE CAÑA 18 AÑOS 750ML",
+          p: 1015,
+          a: 0.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D048",
+          n: "BOTELLA HAVANA 7 AÑOS 700ML",
+          p: 345,
+          a: 5.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D050",
+          n: "BOTELLA MATUSALEM CLASICO 750ML",
+          p: 322.68,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D053",
+          n: "BOTELLA ZACAPA 23 750ML",
+          p: 999,
+          a: 0.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D057",
+          n: "BOTELLA CENTENARIO REPOSADO 700ML",
+          p: 270,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D058",
+          n: "BOTELLA DON JULIO 1942 750ML",
+          p: 2999,
+          a: 0.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D059",
+          n: "BOTELLA DON JULIO 70 700ML",
+          p: 789,
+          a: 1.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D066",
+          n: "BOTELLA 1800 CRISTALINO 700ML",
+          p: 525,
+          a: 1.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D069",
+          n: "BOTELLA 3 GENERACIONES CRISTALINO 750ML",
+          p: 952,
+          a: 2.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D071",
+          n: "BOTELLA 7 LEGUAS BLANCO 750ML",
+          p: 620,
+          a: 1.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D077",
+          n: "BOTELLA CENTENARIO PLATA 700ML",
+          p: 269,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D081",
+          n: "BOTELLA DON JULIO REPOSADO 700ML",
+          p: 566,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D082",
+          n: "BOTELLA DON JULIO AÑEJO 700ML",
+          p: 965,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D083",
+          n: "BOTELLA DON JULIO BLANCO 750ML",
+          p: 439,
+          a: 0.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D088",
+          n: "BOTELLA HERRADURA SELECCION SUPREMA",
+          p: 3850,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D089",
+          n: "BOTELLA HORNITOS CRISTALINO 750ML",
+          p: 649,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D104",
+          n: "BOTELLA SAMBUCA BLANCO 700ML",
+          p: 339.49,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D115",
+          n: "BOTELLA BEEFEATER 750ML",
+          p: 404.8,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D118",
+          n: "BOTELLA BOMBAY SAPPHIRE 750ML",
+          p: 420,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D119",
+          n: "BOTELLA BULLDOG 750ML",
+          p: 709,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D125",
+          n: "BOTELLA MOM 700ML",
+          p: 563.33,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D131",
+          n: "BOTELLA TANQUERAY 750ML",
+          p: 442,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D148",
+          n: "BOTELLA APEROL 700ML",
+          p: 320,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D149",
+          n: "BOTELLA BAILEYS 700ML",
+          p: 332,
+          a: 1.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D150",
+          n: "BOTELLA CAMPARI 750ML",
+          p: 460.41,
+          a: 0.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D152",
+          n: "BOTELLA CHARTREUSE AMARILLO 700ML",
+          p: 1195,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D155",
+          n: "BOTELLA DISARONNO 700ML",
+          p: 483.6,
+          a: 3.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D159",
+          n: "BOTELLA GRAND MARINIER 700ML",
+          p: 776,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D162",
+          n: "BOTELLA LICOR 43 750ML",
+          p: 475.28,
+          a: 2.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D172",
+          n: "BOTELLA ABSOLUT AZUL 750ML",
+          p: 251.84,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D178",
+          n: "BOTELLA CIROC 750ML",
+          p: 793,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D190",
+          n: "BOTELLA BUCHANANS 15 750ML",
+          p: 1379,
+          a: 1.2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D191",
+          n: "BOTELLA BUCHANANS 18 750ML",
+          p: 1810.43,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D193",
+          n: "BOTELLA BUCHANANS RED SEAL 750ML",
+          p: 4458.88,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D196",
+          n: "BOTELLA CHIVAS REGAL 12 750ML",
+          p: 664.14,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D199",
+          n: "BOTELLA CHIVAS REGAL 21 ROYAL SALUTE",
+          p: 6407,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D203",
+          n: "BOTELLA ET. NEGRA 750ML",
+          p: 789,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D204",
+          n: "BOTELLA ET. ROJA 700ML",
+          p: 315,
+          a: 1.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D207",
+          n: "BOTELLA ETIQUETA AZUL 750ML",
+          p: 5650,
+          a: 0.77,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D208",
+          n: "BOTELLA GENTLEMAN JACK 750ML",
+          p: 710,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D214",
+          n: "BOTELLA GLENLIVET 18 750ML",
+          p: 4691,
+          a: 1.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D215",
+          n: "BOTELLA GLENLIVET FOUNDERS RESERVE",
+          p: 1155,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D217",
+          n: "BOTELLA HIBIKI 750ML",
+          p: 1955,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D220",
+          n: "BOTELLA JACK DANIELS 750ML",
+          p: 465,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D224",
+          n: "BOTELLA MACALLAN 12 700ML",
+          p: 1681.33,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D226",
+          n: "BOTELLA MACALLAN 18 700ML",
+          p: 8283,
+          a: 0.6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D231",
+          n: "BOTELLA TOKI 750ML",
+          p: 810,
+          a: 0.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D236",
+          n: "BOTELLA LICOR ST GERMAIN 750ML",
+          p: 949,
+          a: 0.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D252",
+          n: "BOTELLA FERNET BRANCA 750ML",
+          p: 499,
+          a: 0.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D253",
+          n: "BOTELLA CONTROY 750ML",
+          p: 222.34,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D277",
+          n: "BOTELLA KALUHA 1 LT",
+          p: 189,
+          a: 1.1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D299",
+          n: "BOTELLA MAYENDA BLANCO 750ML",
+          p: 946,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D307",
+          n: "BOTELLA ELITE 700ML",
+          p: 845,
+          a: 0.8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D317",
+          n: "BOTELLA ABSOLUT SMOKY PIÑA 750ML",
+          p: 336.5,
+          a: 0.9,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D323",
+          n: "BOTELLA TANQUERAY BOSSA NOVA 700ML",
+          p: 580.17,
+          a: 2.2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D326",
+          n: "BOTELLA BUCHANANS PINEAPPLE 750ML",
+          p: 820,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D327",
+          n: "BOTELLA YAMAZAKI 12 YEARS 700ML",
+          p: 7560,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D328",
+          n: "BOTELLA EL TESORO BLANCO 750ML",
+          p: 2217,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D339",
+          n: "BOTELLA BUFFALO TRACE BOURBON 750ML",
+          p: 599,
+          a: 1.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D341",
+          n: "BOTELLA ALMAVE AMBAR 750ML",
+          p: 609,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D344",
+          n: "BOTELLA ABSOLUT EXTRACT 750ML",
+          p: 374,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "D346",
+          n: "BOTELLA VERMUT ROSADO IZAGUIRRE 750ML",
+          p: 580.17,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      "Cervezas y Refrescos": [{
+          id: "P0855",
+          n: "CORONA DE VIDRIO 24PZA",
+          p: 14.14,
+          a: 96,
+          b: 26,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0857",
+          n: "CORONA LIGHT VIDRIO 24PZA",
+          p: 16,
+          a: 44,
+          b: 12,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0858",
+          n: "CORONA ZERO 24PZA",
+          p: 25,
+          a: 48,
+          b: 15,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0909",
+          n: "PACIFICO DE VIDRIO 24PZA",
+          p: 16.1,
+          a: 48,
+          b: 19,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0936",
+          n: "STELLA VIDRIO 24PZA",
+          p: 19.16,
+          a: 24,
+          b: 11,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0939",
+          n: "ULTRA DE VIDRIO 24PZA",
+          p: 18.47,
+          a: 48,
+          b: 14,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0947",
+          n: "VICTORIA VIDRIO 24PZA",
+          p: 14.14,
+          a: 0,
+          b: 39,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1729",
+          n: "MODELO ESPECIAL DE VIDRIO 12PZA",
+          p: 17.87,
+          a: 96,
+          b: 23,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1730",
+          n: "NEGRA MODELO DE VIDRIO 12PZA",
+          p: 18.62,
+          a: 120,
+          b: 22,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0837",
+          n: "AGUA MINERAL CIEL MINI 235ML 12PZA",
+          p: 19,
+          a: 12,
+          b: 15,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0838",
+          n: "AGUA MINERAL CIEL 355ML LATA 12PZA",
+          p: 21,
+          a: 60,
+          b: 22,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0841",
+          n: "AGUA NATURALCIEL PET 355ML 12PZA",
+          p: 10,
+          a: 48,
+          b: 18,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0845",
+          n: "COCA REGULAR 235ML 24PZA",
+          p: 22,
+          a: 36,
+          b: 8,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0846",
+          n: "COCA REGULAR 355ML 12PZA",
+          p: 22,
+          a: 60,
+          b: 16,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0849",
+          n: "COCA COLA LIGHT 355ML 12PZA",
+          p: 21,
+          a: 30,
+          b: 9,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0851",
+          n: "COCA COLA SIN AZUCAR 355ML 12PZA",
+          p: 21,
+          a: 36,
+          b: 16,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0873",
+          n: "FANTA NARANJA 355ML 12PZA",
+          p: 22,
+          a: 8,
+          b: 7,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0877",
+          n: "GINGER ALE SCHWEPPES 235ML",
+          p: 14,
+          a: 24,
+          b: 3,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0878",
+          n: "GRANADINA MADRILEÑA 1 LT",
+          p: 63,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0919",
+          n: "AGUA SAN PELLEGRINO 250ML 6PZ",
+          p: 24,
+          a: 30,
+          b: 3,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0930",
+          n: "SPRITE LATA 355ML 12PZA",
+          p: 22,
+          a: 24,
+          b: 7,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0937",
+          n: "AGUA MINERAL TOPO CHICO 355ML 24PZA",
+          p: 22,
+          a: 48,
+          b: 5,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1770",
+          n: "VELVET SODA GUANABANA 275ML 24PZA",
+          p: 35.41,
+          a: 48,
+          b: 7,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1772",
+          n: "VELVET SODA MARACUYA 275ML 24PZA",
+          p: 35.41,
+          a: 20,
+          b: 8,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1774",
+          n: "VELVET SODA PEPINO LIMON 275ML 24PZA",
+          p: 35.41,
+          a: 57,
+          b: 9,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1775",
+          n: "VELVET SODA TANGERINA 275ML 24PZA",
+          p: 35.41,
+          a: 35,
+          b: 10,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2130",
+          n: "VELVET SODA POMELO 275ML 24PZA",
+          p: 35.41,
+          a: 37,
+          b: 10,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      Vinos: [{
+          id: "V003",
+          n: "BOTELLA ALAMOS MALBEC 750ML",
+          p: 383,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V006",
+          n: "BOTELLA FINCA LA LINDA MALBEC 750ML",
+          p: 312.8,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V009",
+          n: "BOTELLA LUIGI BOSCA MALBEC 750ML",
+          p: 576,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V050",
+          n: "BOTELLA ALION TEMPRANILLO 750ML",
+          p: 2760,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V056",
+          n: "BOTELLA BERONIA CRIANZA 750ML",
+          p: 250,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V064",
+          n: "BOTELLA EL CIRCO TEMPRANILLO 750ML",
+          p: 198,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V066",
+          n: "BOTELLA EL NIÑO 750ML",
+          p: 373,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V073",
+          n: "BOTELLA MARQUES DE CACERES 750ML",
+          p: 355,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V075",
+          n: "BOTELLA MARQUES DE RISCAL 750ML",
+          p: 637.06,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V082",
+          n: "BOTELLA MONTEABELLON 5 MESES 750ML",
+          p: 299,
+          a: 8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V083",
+          n: "BOTELLA NUMANTHIA TINTA DE TORO 750ML",
+          p: 1591.42,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V105",
+          n: "BOTELLA MOET & CHANDON BRUT IMPERIAL",
+          p: 1401.13,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V107",
+          n: "BOTELLA MOET & CHANDON ROSE IMPERIAL",
+          p: 1688.48,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V115",
+          n: "BOTELLA CASA MADERO 3V 750ML",
+          p: 440,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V116",
+          n: "BOTELLA CASA MADERO 3V GRAN RESERVA",
+          p: 970,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V125",
+          n: "BOTELLA DUETTO SANTO TOMAS 750ML",
+          p: 1757.51,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V135",
+          n: "BOTELLA LA CETTO CABERNET SAUVIGNON",
+          p: 161.33,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V140",
+          n: "BOTELLA MARIA TINTO 750ML",
+          p: 627,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V157",
+          n: "BOTELLA CASA MADERO V ROSADO 750ML",
+          p: 325.5,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V224",
+          n: "BOTELLA CINZANO PROSECCO 750ML",
+          p: 353.65,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V254",
+          n: "BOTELLA LOUIS ROEDERER COLECTION 750ML",
+          p: 2055,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V299",
+          n: "BOTELLA KURDO BODEGAS 750ML",
+          p: 545,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "V300",
+          n: "BOTELLA CARAMELO RODERO 750ML",
+          p: 599,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      Lacteos: [{
+          id: "P0860",
+          n: "CREMA ACIDA LYNCOTT 5 LT",
+          p: 358.6,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0868",
+          n: "CREMA PARA BATIR LYNCOTT 980ML",
+          p: 89,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1988",
+          n: "CREMA PARA BATIR PURE LYNCOTT 4 LT",
+          p: 232.2,
+          a: 4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2080",
+          n: "CREMA PARA BATIR VERSATIE LACTEA 1 LT",
+          p: 95.5,
+          a: 6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0630",
+          n: "QUESO BURRATA BELGIOIOSO 450GR",
+          p: 240,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1997",
+          n: "QUESO CABRA CENIZA LYNCOTT 280GR",
+          p: 67,
+          a: 5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0635",
+          n: "QUESO CREMA CREAMY & SOFT 8KG",
+          p: 1296,
+          a: 6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2031",
+          n: "QUESO MANCHEGO PRIME LYNCOTT 3 KG",
+          p: 163,
+          a: 10.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0645",
+          n: "QUESO MASCARPONE BELGIOIOSO 453GR",
+          p: 158,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2040",
+          n: "QUESO MOZARELLA 453GR",
+          p: 108,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P2032",
+          n: "QUESO PARMESANO RAYADO LYNCOTT 2.27KG",
+          p: 550,
+          a: 2.27,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0651",
+          n: "QUESO PROVOLETA 1 KG",
+          p: 225,
+          a: 12,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      Carnes: [{
+          id: "P0060",
+          n: "ARRACHERA LONJA KILO",
+          p: 300,
+          a: 7.466,
+          b: 13.8,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0067",
+          n: "SHORT RIB ASADO 1 KG",
+          p: 487,
+          a: 7.4,
+          b: 0.78,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0111",
+          n: "CABRERIA 1 KG",
+          p: 503,
+          a: 1.536,
+          b: 2.5,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0208",
+          n: "CHISTORRA 1 KG",
+          p: 144,
+          a: 0.9,
+          b: 2.5,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0219",
+          n: "CHORIZO ARGENTINO 1 KG",
+          p: 172,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0272",
+          n: "COWBOY KILO",
+          p: 745,
+          a: 2.5,
+          b: 3.7,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0475",
+          n: "MOLLEJA 1 KG DE RES IBP",
+          p: 165,
+          a: 6.6,
+          b: 2.472,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0493",
+          n: "NEW YORK 0X1 CAB",
+          p: 505,
+          a: 6.8,
+          b: 7.4,
+          c: 0.482,
+          pr: 0,
+        },
+        {
+          id: "P0583",
+          n: "PICAÑA 1 KG",
+          p: 380,
+          a: 9,
+          b: 2.7,
+          c: 3,
+          pr: 0
+        },
+        {
+          id: "P0661",
+          n: "RIB EYE CAB 1 KG",
+          p: 573,
+          a: 15.2,
+          b: 2.012,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0663",
+          n: "RIB EYE STERLING SILVER 1 KG",
+          p: 578,
+          a: 8,
+          b: 34.5,
+          c: 1.664,
+          pr: 0,
+        },
+        {
+          id: "P0665",
+          n: "RIB EYE WAGYU 300/500GR",
+          p: 1450,
+          a: 1.6,
+          b: 4,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0755",
+          n: "TOMAHAWK 1 KG XO",
+          p: 799,
+          a: 1,
+          b: 6,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0761",
+          n: "TOP SIRLOIN 1KG",
+          p: 220,
+          a: 2.3,
+          b: 2.784,
+          c: 6.2,
+          pr: 0,
+        },
+        {
+          id: "P0783",
+          n: "VACIO 1 KG",
+          p: 420,
+          a: 1.6,
+          b: 2.486,
+          c: 5.4,
+          pr: 0,
+        },
+        {
+          id: "P1754",
+          n: "TUETANO CORTE CAÑA 1 KILO",
+          p: 95,
+          a: 2.67,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      Mariscos: [{
+          id: "P0136",
+          n: "CAMARON 16-20 SIN GLAZE 1 KG",
+          p: 236,
+          a: 2.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0199",
+          n: "CHILEAN SEA BASS 1 KG",
+          p: 1063,
+          a: 0.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0513",
+          n: "OSTION PZ",
+          p: 40,
+          a: 1.6,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0621",
+          n: "PULPO 2-4 1 KG",
+          p: 310,
+          a: 0.6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1693",
+          n: "SALMON AHUMADO PRE FILETEADO 1 KG",
+          p: 465,
+          a: 1.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0687",
+          n: "SALMON EN LONJA FRESCO",
+          p: 298,
+          a: 2.9,
+          b: 1.634,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0075",
+          n: "ATUN IMPORTADO 1KG",
+          p: 215,
+          a: 3.8,
+          b: 1.336,
+          c: 0,
+          pr: 0,
+        },
+      ],
+      "Frutas y Verduras": [{
+          id: "P0031",
+          n: "AGUACATE 1 KG",
+          p: 45,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0056",
+          n: "APIO NACIONAL 1KG",
+          p: 40,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0066",
+          n: "ARUGULA BABY 1 KG",
+          p: 70,
+          a: 0.4,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0127",
+          n: "CALABACITA ITALIANA 1 KG",
+          p: 15,
+          a: 2.6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0156",
+          n: "CEBOLLA BLANCA 1 KG",
+          p: 12,
+          a: 10,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0159",
+          n: "CEBOLLA MORADA 1 KG",
+          p: 15,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0172",
+          n: "CHAMPIÑON BLANCO 1 KG",
+          p: 105,
+          a: 1,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0188",
+          n: "CHILE JALAPEÑO 1 KG",
+          p: 25,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0221",
+          n: "CILANTRO 1 KG",
+          p: 15,
+          a: 0.6,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0308",
+          n: "ESPINACA 1 KG",
+          p: 50,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0323",
+          n: "FRAMBUESA 1 KG DOMO 250GR",
+          p: 35,
+          a: 3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0324",
+          n: "FRESA 1 KG DOMO 454GR",
+          p: 110,
+          a: 1.5,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0384",
+          n: "JITOMATE BOLA 1 KG",
+          p: 35,
+          a: 6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0387",
+          n: "JITOMATE GUAJE/SALADET 1 KG",
+          p: 45,
+          a: 6,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1650",
+          n: "LECHUGA LARGA CORAZONES 500GR",
+          p: 70,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0424",
+          n: "LIMON CON SEMILLA 1 KG",
+          p: 40,
+          a: 2.7,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0426",
+          n: "LIMON S/SEMILLA 1 KG",
+          p: 45,
+          a: 8,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0487",
+          n: "NARANJA 1 KG",
+          p: 16,
+          a: 10,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0529",
+          n: "PAPA PARA FREIR 1KG",
+          p: 32,
+          a: 10,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0572",
+          n: "PEPINO 1 KG",
+          p: 22,
+          a: 1.4,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0593",
+          n: "PIMIENTO AMARILLO 1 KG",
+          p: 48,
+          a: 0.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0594",
+          n: "PIMIENTO ROJO MORRON 1 KG",
+          p: 48,
+          a: 0.3,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P1641",
+          n: "PLATANO 1 KG",
+          p: 23,
+          a: 1.5,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0703",
+          n: "SANDIA 1 KG",
+          p: 20,
+          a: 1.3,
+          b: 0,
+          c: 0,
+          pr: 0
+        },
+        {
+          id: "P0810",
+          n: "ZANAHORIA 1 KG",
+          p: 15,
+          a: 1.2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+        {
+          id: "P0814",
+          n: "ZARZAMORAS 1 KG DOMO 250GR",
+          p: 30,
+          a: 2,
+          b: 0,
+          c: 0,
+          pr: 0,
+        },
+      ],
+    };
+
+    let S = {
+      periodos: [],
+      pid: null,
+      counts: {},
+      compras: {},
+      catalog: null,
+    };
+
+    function loadS() {
+      try {
+        const d = localStorage.getItem("ea_inv_v3");
+        if (d) S = {
+          ...S,
+          ...JSON.parse(d)
+        };
+      } catch (e) {}
+      if (!S.periodos.length) initDef();
+      if (!S.catalog) S.catalog = JSON.parse(JSON.stringify(BASE));
+    }
+
+    function saveS() {
+      localStorage.setItem("ea_inv_v3", JSON.stringify(S));
+    }
+
+    function initDef() {
+      const id = "P" + Date.now();
+      S.periodos.unshift({
+        id,
+        nombre: "Marzo 2026 — Semana 1",
+        fecha: "2026-03-01",
+        closed: false,
+      });
+      S.pid = id;
+      S.counts[id] = {};
+      for (const [cat, prods] of Object.entries(BASE)) {
+        for (const p of prods) {
+          const k = p.id || p.n;
+          const t = (p.a || 0) + (p.b || 0) + (p.c || 0) + (p.pr || 0);
+          if (t > 0)
+            S.counts[id][k] = {
+              a: p.a || 0,
+              b: p.b || 0,
+              c: p.c || 0,
+              pr: p.pr || 0,
+            };
+        }
+      }
+      saveS();
+    }
+    const gc = (pid, k) =>
+      (S.counts[pid] && S.counts[pid][k]) || {
+        a: 0,
+        b: 0,
+        c: 0,
+        pr: 0
+      };
+    const sc = (c) => (c.a || 0) + (c.b || 0) + (c.c || 0) + (c.pr || 0);
+    const fmt = (n) => "$" + Math.round(n).toLocaleString("es-MX");
+    const todayLocalISO = (date = new Date()) =>
+      `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+    function tots(pid) {
+      const r = {
+        _t: 0
+      };
+      for (const [c, prods] of Object.entries(S.catalog || BASE)) {
+        let s = 0;
+        for (const p of prods) {
+          s += sc(gc(pid, p.id || p.n)) * p.p;
+        }
+        r[c] = s;
+        r._t += s;
+      }
+      return r;
+    }
+
+    // NAV
+    let role = "",
+      cCat = "",
+      gCat = "Destilados",
+      gArea = "all",
+      pCatF = "__all__";
+
+    function goLanding() {
+      document
+        .querySelectorAll(".screen")
+        .forEach((s) => s.classList.remove("active"));
+      document.getElementById("sl").classList.add("active");
+      document.getElementById("gtbar").style.display = "none";
+    }
+
+    function enterRole(r) {
+      role = r;
+      document
+        .querySelectorAll(".screen")
+        .forEach((s) => s.classList.remove("active"));
+      if (r === "gm") {
+        document.getElementById("sgm").classList.add("active");
+        showGT("dash", document.querySelector("#sgm .tab"));
+      } else if (r === "compras") {
+        document.getElementById("scom").classList.add("active");
+        renderCI();
+      } else {
+        document.getElementById("sc").classList.add("active");
+        const b = document.getElementById("cbadge");
+        b.textContent = r === "cocina" ? "Cocina" : "Barra";
+        b.className = "rbadge " + (r === "cocina" ? "bcoc" : "bbar");
+        cCat = r === "barra" ? "Destilados" : "Carnes";
+        buildCC(r);
+        renderCList();
+        updCT(r);
+      }
+    }
+
+    // COCINA/BARRA
+    const BCAT = {
+      cocina: COCINA_C,
+      barra: BARRA_C
+    };
+    const ALIST = {
+      barra: ["b"],
+      cocina: ["c", "pr"]
+    };
+    const ALB = {
+      b: "Barra",
+      c: "Cocina",
+      pr: "Producción"
+    };
+
+    function buildCC(r) {
+      document.getElementById("ccatchips").innerHTML = BCAT[r]
+        .map(
+          (c) =>
+          `<button class="chip${c === cCat ? " active" : ""}" onclick="setCCat('${c}',this)">${c}</button>`,
+        )
+        .join("");
+    }
+
+    function setCCat(c, btn) {
+      cCat = c;
+      document
+        .querySelectorAll("#ccatchips .chip")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("csearch").value = "";
+      renderCList();
+    }
+
+    function renderCList() {
+      const pid = S.pid,
+        sr = document.getElementById("csearch").value.toLowerCase(),
+        ars = ALIST[role] || ["b"],
+        prods = (S.catalog || BASE)[cCat] || [];
+      let h = "";
+      for (const p of prods.filter(
+          (p) => !sr || p.n.toLowerCase().includes(sr),
+        )) {
+        const k = p.id || p.n,
+          cnt = gc(pid, k),
+          aq = ars.reduce((s, a) => s + (cnt[a] || 0), 0),
+          hq = aq > 0;
+        if (ars.length === 1) {
+          const ar = ars[0];
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${k}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${k}','${ar}',1,'c')">+</button><div class="qv">${fmt((cnt[ar] || 0) * p.p)}</div></div></div>`;
+        } else {
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${ars.map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:52px;text-align:right">${ALB[ar]}</span><button class="qb" onclick="adj('${k}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${k}','${ar}',1,'c')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(aq * p.p)}</div></div></div>`;
+        }
+      }
+      document.getElementById("cplist").innerHTML =
+        h || '<div class="es">Sin resultados</div>';
+      updCT(role);
+    }
+
+    function adj(k, ar, d, ctx) {
+      const pid = S.pid;
+      if (!S.counts[pid]) S.counts[pid] = {};
+      if (!S.counts[pid][k]) S.counts[pid][k] = {
+        a: 0,
+        b: 0,
+        c: 0,
+        pr: 0
+      };
+      S.counts[pid][k][ar] = Math.max(
+        0,
+        Math.round(((S.counts[pid][k][ar] || 0) + d) * 10) / 10,
+      );
+      saveS();
+      ctx === "c" ? renderCList() : renderGL();
+    }
+
+    function setq(k, ar, v, ctx) {
+      const pid = S.pid;
+      if (!S.counts[pid]) S.counts[pid] = {};
+      if (!S.counts[pid][k]) S.counts[pid][k] = {
+        a: 0,
+        b: 0,
+        c: 0,
+        pr: 0
+      };
+      S.counts[pid][k][ar] = Math.max(0, parseFloat(v) || 0);
+      saveS();
+      ctx === "c" ? updCT(role) : updGTB();
+    }
+
+    function updCT(r) {
+      const pid = S.pid,
+        ars = ALIST[r] || ["b"];
+      let t = 0,
+        i = 0;
+      for (const prods of Object.values(S.catalog || BASE)) {
+        for (const p of prods) {
+          const k = p.id || p.n,
+            cnt = gc(pid, k),
+            q = ars.reduce((s, a) => s + (cnt[a] || 0), 0);
+          if (q > 0) {
+            t += q * p.p;
+            i++;
+          }
+        }
+      }
+      document.getElementById("ctotal").textContent = fmt(t);
+      document.getElementById("citems").textContent = i + " productos";
+      const per = S.periodos.find((p) => p.id === pid);
+      document.getElementById("cper").textContent = per ? per.nombre : "";
+    }
+
+    // COMPRAS TABS
+    function showCT(t, btn) {
+      document
+        .querySelectorAll("#scom .page")
+        .forEach((p) => p.classList.remove("active"));
+      document
+        .querySelectorAll("#scom .tab")
+        .forEach((b) => b.classList.remove("active"));
+      document.getElementById("cp-" + t).classList.add("active");
+      btn.classList.add("active");
+      if (t === "inv") renderCI();
+      if (t === "prod") renderCP();
+      if (t === "reg") renderCR();
+    }
+
+    function renderCI() {
+      const pid = S.pid,
+        t = tots(pid),
+        per = S.periodos.find((p) => p.id === pid);
+      let h = `<p class="stitle">${per ? per.nombre : "Inventario"}</p><div class="kgrid"><div class="kpi"><div class="klbl">Total inventario</div><div class="kval">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">vs Feb 28</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div><div class="catsum">`;
+      CATS_ALL.forEach((c, i) => {
+        const v = t[c] || 0,
+          pct = t._t > 0 ? (v / t._t) * 100 : 0,
+          col = CC[i % CC.length];
+        h += `<div class="crow"><div class="cdot" style="background:${col}"></div><div style="flex:1"><div class="cname">${c}</div><div class="cbar"><div class="cbarfill" style="width:${pct.toFixed(1)}%;background:${col}"></div></div></div><div class="cval">${fmt(v)}</div></div>`;
+      });
+      h += "</div>";
+      document.getElementById("cInvC").innerHTML = h;
+    }
+
+    function renderCP() {
+      document.getElementById("mpcat").innerHTML = CATS_ALL.map(
+        (c) => `<option>${c}</option>`,
+      ).join("");
+      const sr =
+        (document.getElementById("psr") || {}).value?.toLowerCase() || "";
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">Productos</p><button class="bsm g" onclick="openNP()">+ Nuevo</button></div><div class="sw"><input type="text" id="psr" placeholder="Buscar producto..." oninput="renderCP()"></div><div class="chips" id="pcatchips"><button class="chip${pCatF === "__all__" ? " active" : ""}" onclick="setPCF('__all__',this)">Todos</button>`;
+      CATS_ALL.forEach((c) => {
+        h += `<button class="chip${pCatF === c ? " active" : ""}" onclick="setPCF('${c}',this)">${c}</button>`;
+      });
+      h += `</div><div class="plist" id="plinner">`;
+      const cat = S.catalog || BASE;
+      const pid = S.pid;
+      for (const [c, prods] of Object.entries(cat)) {
+        if (pCatF !== "__all__" && c !== pCatF) continue;
+        for (const p of prods) {
+          const ns = (
+            document.getElementById("psr")?.value || ""
+          ).toLowerCase();
+          if (ns && !p.n.toLowerCase().includes(ns)) continue;
+          const hq = sc(gc(pid, p.id || p.n)) > 0;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id || "—"} · ${c} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}${p.presentacion ? " · " + p.presentacion : ""}</div></div><button class="bsm" onclick='openEP(${JSON.stringify(p)},"${c}")'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4L7 21H3v-4L17 3z"/></svg></button></div>`;
+        }
+      }
+      h += "</div>";
+      document.getElementById("cProdC").innerHTML = h;
+    }
+
+    function setPCF(c, btn) {
+      pCatF = c;
+      renderCP();
+    }
+
+    function openNP() {
+      document.getElementById("mpt").textContent = "Nuevo Producto";
+      ["mpnm", "mpid", "mppres", "mpun"].forEach(
+        (id) => (document.getElementById(id).value = ""),
+      );
+      document.getElementById("mppx").value = "";
+      document.getElementById("mpkey").value = "__new__";
+      document.getElementById("mprod").style.display = "flex";
+    }
+
+    function openEP(p, cat) {
+      document.getElementById("mpt").textContent = "Editar Producto";
+      document.getElementById("mpnm").value = p.n;
+      document.getElementById("mpid").value = p.id || "";
+      document.getElementById("mppx").value = p.p || 0;
+      document.getElementById("mppres").value = p.presentacion || "";
+      document.getElementById("mpun").value = p.unidad || "";
+      document.getElementById("mpcat").value = cat;
+      document.getElementById("mpkey").value = p.id || p.n;
+      document.getElementById("mprod").style.display = "flex";
+    }
+
+    function saveProd() {
+      if (!S.catalog) S.catalog = JSON.parse(JSON.stringify(BASE));
+      const n = document.getElementById("mpnm").value.trim(),
+        id = document.getElementById("mpid").value.trim(),
+        p = parseFloat(document.getElementById("mppx").value) || 0,
+        cat = document.getElementById("mpcat").value,
+        pres = document.getElementById("mppres").value.trim(),
+        un = document.getElementById("mpun").value.trim(),
+        key = document.getElementById("mpkey").value;
+      if (!n) return;
+      if (key === "__new__") {
+        if (!S.catalog[cat]) S.catalog[cat] = [];
+        S.catalog[cat].push({
+          id,
+          n,
+          p,
+          a: 0,
+          b: 0,
+          c: 0,
+          pr: 0,
+          presentacion: pres,
+          unidad: un,
+        });
+      } else {
+        for (const prods of Object.values(S.catalog)) {
+          const i = prods.findIndex((p) => (p.id || p.n) === key);
+          if (i >= 0) {
+            prods[i] = {
+              ...prods[i],
+              n,
+              id,
+              p,
+              presentacion: pres,
+              unidad: un,
+            };
+            break;
+          }
+        }
+      }
+      saveS();
+      document.getElementById("mprod").style.display = "none";
+      renderCP();
+    }
+
+    function renderCR() {
+      const pid = S.pid,
+        comp = S.compras[pid] || [],
+        total = comp.reduce((s, c) => s + (c.monto || 0), 0);
+      const allCats = [...CATS_ALL, "Agua Purificada", "Tortillas", "Café"];
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">Compras</p><div style="font-family:'Fraunces',serif;font-size:17px;color:var(--gold)">${fmt(total)}</div></div><div class="card" style="margin-bottom:14px"><div class="ct" style="margin-bottom:9px">Registrar compra</div><div class="frow"><div class="fg"><label>Categoría</label><select id="rcat">${allCats.map((c) => `<option>${c}</option>`).join("")}</select></div><div class="fg"><label>Monto ($)</label><input type="number" id="rmonto" placeholder="0.00"></div></div><div class="frow"><div class="fg" style="flex:2"><label>Descripción</label><input id="rdesc" placeholder="ej. Compra semanal carnes"></div><div class="fg"><label>Fecha</label><input type="date" id="rfecha" value="${todayLocalISO()}"></div></div><button class="bsm g" style="width:100%" onclick="addC()">+ Registrar</button></div>`;
+      if (comp.length) {
+        h += `<div class="card">`;
+        comp
+          .slice()
+          .reverse()
+          .forEach((c, ri) => {
+            const i = comp.length - 1 - ri;
+            h += `<div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:13px;font-weight:500">${c.cat}</div><div style="font-size:11px;color:var(--muted)">${c.desc || "—"} · ${c.fecha || ""}</div></div><div style="font-weight:700;color:var(--gold)">${fmt(c.monto)}</div><button onclick="delC(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:3px 7px">✕</button></div>`;
+          });
+        h += `</div>`;
+      } else h += `<div class="es">Sin compras registradas</div>`;
+      document.getElementById("cRegC").innerHTML = h;
+    }
+
+    function addC() {
+      const pid = S.pid,
+        m = parseFloat(document.getElementById("rmonto").value) || 0;
+      if (m <= 0) return;
+      if (!S.compras[pid]) S.compras[pid] = [];
+      S.compras[pid].push({
+        cat: document.getElementById("rcat").value,
+        monto: m,
+        desc: document.getElementById("rdesc").value.trim(),
+        fecha: document.getElementById("rfecha").value,
+      });
+      saveS();
+      renderCR();
+    }
+
+    function delC(i) {
+      const pid = S.pid;
+      if (S.compras[pid]) {
+        S.compras[pid].splice(i, 1);
+        saveS();
+        renderCR();
+      }
+    }
+
+    // GM
+    function showGT(t, btn) {
+      document
+        .querySelectorAll("#sgm .page")
+        .forEach((p) => p.classList.remove("active"));
+      document
+        .querySelectorAll("#sgm .tab")
+        .forEach((b) => b.classList.remove("active"));
+      document.getElementById("gp-" + t).classList.add("active");
+      if (btn) btn.classList.add("active");
+      document.getElementById("gtbar").style.display =
+        t === "cap" ? "flex" : "none";
+      if (t === "dash") renderGD();
+      if (t === "ventas") renderGV();
+      if (t === "cap") {
+        buildGCC();
+        renderGL();
+      }
+      if (t === "cierre") renderGC();
+      if (t === "hist") renderGH();
+    }
+
+    function renderGD() {
+      const pid = S.pid,
+        t = tots(pid),
+        per = S.periodos.find((p) => p.id === pid),
+        idx = S.periodos.findIndex((p) => p.id === pid),
+        prev = S.periodos[idx + 1],
+        pt = prev ? tots(prev.id)._t : INV0,
+        d = t._t - pt,
+        comp = (S.compras[pid] || []).reduce((s, c) => s + (c.monto || 0), 0);
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">${per ? per.nombre : "Dashboard"}</p><div style="display:flex;gap:6px"><button class="bsm" onclick="exportX()">Exportar</button><button class="bsm g" onclick="showMP()">+ Periodo</button></div></div><div class="kgrid"><div class="kpi"><div class="klbl">Inventario actual</div><div class="kval">${fmt(t._t)}</div><div class="ksub">Valorizado al costo</div></div><div class="kpi"><div class="klbl">Variación vs anterior</div><div class="kval sm" style="color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)}</div><div class="ksub">ant: ${fmt(pt)}</div></div><div class="kpi"><div class="klbl">Compras del periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. base Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div></div><div class="catsum">`;
+      CATS_ALL.forEach((c, i) => {
+        const v = t[c] || 0,
+          pct = t._t > 0 ? (v / t._t) * 100 : 0,
+          col = CC[i % CC.length];
+        h += `<div class="crow" onclick="goGCap('${c}')"><div class="cdot" style="background:${col}"></div><div style="flex:1"><div class="cname">${c}</div><div class="cbar"><div class="cbarfill" style="width:${pct.toFixed(1)}%;background:${col}"></div></div></div><div class="cval">${fmt(v)}</div></div>`;
+      });
+      h += "</div>";
+      document.getElementById("gDash").innerHTML = h;
+    }
+
+    function goGCap(c) {
+      gCat = c;
+      document
+        .querySelectorAll("#sgm .tab")
+        .forEach((t) => t.classList.remove("active"));
+      document.querySelectorAll("#sgm .tab")[1].classList.add("active");
+      showGT("cap");
+    }
+
+    function buildGCC() {
+      document.getElementById("gcatchips").innerHTML = CATS_ALL.map(
+        (c) =>
+        `<button class="chip${c === gCat ? " active" : ""}" onclick="setGC('${c}',this)">${c}</button>`,
+      ).join("");
+    }
+
+    function setGC(c, btn) {
+      gCat = c;
+      document
+        .querySelectorAll("#gcatchips .chip")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("gsearch").value = "";
+      renderGL();
+    }
+
+    function setGA(a, btn) {
+      gArea = a;
+      document
+        .querySelectorAll("#gareachips .chip")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGL();
+    }
+
+    function renderGL() {
+      const pid = S.pid,
+        sr = document.getElementById("gsearch").value.toLowerCase(),
+        prods = (S.catalog || BASE)[gCat] || [],
+        ars = gArea === "all" ? ["a", "b", "c", "pr"] : [gArea];
+      let h = "";
+      for (const p of prods.filter(
+          (p) => !sr || p.n.toLowerCase().includes(sr),
+        )) {
+        const k = p.id || p.n,
+          cnt = gc(pid, k),
+          hq = sc(cnt) > 0;
+        if (gArea === "all") {
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${["a", "b", "c", "pr"].map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:44px;text-align:right">${{ a: "Almacén", b: "Barra", c: "Cocina", pr: "Prod." }[ar]}</span><button class="qb" onclick="adj('${k}','${ar}',−1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${k}','${ar}',1,'g')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(sc(cnt) * p.p)}</div></div></div>`;
+        } else {
+          const ar = ars[0];
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">$${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${k}','${ar}',-1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${k}','${ar}',1,'g')">+</button><div class="qv">${fmt(sc(cnt) * p.p)}</div></div></div>`;
+        }
+      }
+      document.getElementById("gplist").innerHTML =
+        h || '<div class="es">Sin resultados</div>';
+      updGTB();
+    }
+
+    // FIX: adj for GM uses '−' (minus sign) which is not the same as '-'
+    // Patch the onclick to use numeric -1 properly
+    document.addEventListener("click", function(e) {
+      if (e.target.classList.contains("qb") && e.target.closest("#sgm")) {
+        // handled inline
+      }
+    });
+
+    function updGTB() {
+      const pid = S.pid,
+        t = tots(pid);
+      document.getElementById("gtotal").textContent = fmt(t._t);
+      const items = Object.values(S.counts[pid] || {}).filter(
+        (c) => sc(c) > 0,
+      ).length;
+      document.getElementById("gitems").textContent = items + " productos";
+      const per = S.periodos.find((p) => p.id === pid);
+      document.getElementById("gper").textContent = per ? per.nombre : "";
+    }
+
+    function renderGC() {
+      const pid = S.pid,
+        t = tots(pid),
+        comp = (S.compras[pid] || []).reduce((s, c) => s + (c.monto || 0), 0),
+        per = S.periodos.find((p) => p.id === pid);
+      const ci = {};
+      CATS_ALL.forEach((c) => {
+        ci[c] = (BASE[c] || []).reduce(
+          (s, p) =>
+          s + ((p.a || 0) + (p.b || 0) + (p.c || 0) + (p.pr || 0)) * p.p,
+          0,
+        );
+      });
+      let h = `<p class="stitle">Cierre — ${per ? per.nombre : ""}</p><div class="kgrid"><div class="kpi"><div class="klbl">Inv. inicial Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div><div class="kpi"><div class="klbl">Compras periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. actual</div><div class="kval sm">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">Variación neta</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div>`;
+      CATS_ALL.forEach((c, i) => {
+        const cur = t[c] || 0,
+          ini = ci[c] || 0,
+          d = cur - ini,
+          col = CC[i % CC.length];
+        h += `<div class="card"><div class="ch"><div style="display:flex;align-items:center;gap:7px"><div style="width:7px;height:7px;border-radius:50%;background:${col}"></div><span class="ct">${c}</span></div><div class="cv">${fmt(cur)}</div></div><div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Inicial: ${fmt(ini)}</span><span class="${d > 0 ? "du" : d < 0 ? "dd" : "de"}">${d > 0 ? "▲ " : d < 0 ? "▼ " : "— "}${fmt(Math.abs(d))}</span></div></div>`;
+      });
+      document.getElementById("gCierre").innerHTML = h;
+    }
+
+    function renderGH() {
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">Histórico</p><button class="bsm g" onclick="showMP()">+ Periodo</button></div>`;
+      S.periodos.forEach((p, i) => {
+        const t = tots(p.id),
+          prev = S.periodos[i + 1],
+          pt = prev ? tots(prev.id)._t : INV0,
+          d = t._t - pt,
+          act = p.id === S.pid;
+        h += `<div class="card" style="cursor:pointer;border-color:${act ? "var(--gold)" : "var(--border)"}" onclick="setAP('${p.id}')"><div class="ch"><div><div class="ct">${p.nombre} <span class="tag ${act ? "topen" : "tclosed"}">${act ? "Activo" : "Cerrado"}</span></div><div class="cs">${p.fecha}</div></div><div style="text-align:right"><div class="cv">${fmt(t._t)}</div><div style="font-size:11px;color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)} vs ant.</div></div></div></div>`;
+      });
+      document.getElementById("gHist").innerHTML = h;
+    }
+
+    function setAP(id) {
+      S.pid = id;
+      saveS();
+      renderGH();
+      renderGD();
+    }
+
+    // PERIODO MODAL
+    function showMP() {
+      document.getElementById("mpn").value = "";
+      document.getElementById("mpf").value = todayLocalISO();
+      document.getElementById("mper").style.display = "flex";
+    }
+
+    function crearPer() {
+      const n = document.getElementById("mpn").value.trim(),
+        f = document.getElementById("mpf").value;
+      if (!n) return;
+      const id = "P" + Date.now(),
+        prev = S.counts[S.pid] || {};
+      S.periodos.unshift({
+        id,
+        nombre: n,
+        fecha: f,
+        closed: false
+      });
+      S.pid = id;
+      S.counts[id] = JSON.parse(JSON.stringify(prev));
+      saveS();
+      document.getElementById("mper").style.display = "none";
+      renderGD();
+      renderGH();
+    }
+
+    // EXPORT
+    function exportX() {
+      const pid = S.pid,
+        cat = S.catalog || BASE,
+        per = S.periodos.find((p) => p.id === pid),
+        t = tots(pid);
+      let csv = `"La Estancia Argentina León — Inventario"\n"${per ? per.nombre : ""}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n"Categoría","ID","Producto","Presentación","Almacén","Barra","Cocina","Producción","Total Unidades","Precio Unitario","Valor Total"\n`;
+      let grand = 0;
+      for (const [c, prods] of Object.entries(cat)) {
+        let ct = 0;
+        for (const p of prods) {
+          const k = p.id || p.n,
+            cnt = gc(pid, k),
+            q = sc(cnt);
+          if (q > 0) {
+            const v = q * p.p;
+            ct += v;
+            csv += `"${c}","${p.id || ""}","${p.n}","${p.presentacion || ""}",${cnt.a || 0},${cnt.b || 0},${cnt.c || 0},${cnt.pr || 0},${q},$${p.p.toFixed(2)},$${v.toFixed(2)}\n`;
+          }
+        }
+        if (ct > 0) {
+          grand += ct;
+          csv += `"","","SUBTOTAL ${c}","","","","","","","","$${ct.toFixed(2)}"\n\n`;
+        }
+      }
+      csv += `"","","TOTAL INVENTARIO","","","","","","","","$${grand.toFixed(2)}"\n`;
+      const comp = S.compras[pid] || [];
+      if (comp.length) {
+        csv += `\n"COMPRAS DEL PERIODO"\n"Categoría","Descripción","Fecha","Monto"\n`;
+        comp.forEach((c) => {
+          csv += `"${c.cat}","${c.desc || ""}","${c.fecha || ""}","$${(c.monto || 0).toFixed(2)}"\n`;
+        });
+        csv += `"","TOTAL COMPRAS","","$${comp.reduce((s, c) => s + (c.monto || 0), 0).toFixed(2)}"\n`;
+      }
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8",
+      });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `inventario_${(per ? per.nombre : "periodo").replace(/\s/g, "_")}_${todayLocalISO()}.csv`;
+      a.click();
+    }
+
+    // ----------------------------------------
+    // VENTAS & PRESUPUESTO DE COMPRAS
+    // Matches the Excel: Venta Proyectada (lineal), Costo%, Presupuesto, Semanas, Sobrante
+    // ----------------------------------------
+
+    // Default % cost per budget category (from your Excel)
+    const PCT_DEF = {
+      Destilados: 6,
+      Vinos: 13,
+      "Cervezas y Refrescos": 8,
+      Carnes: 46,
+      Lacteos: 5,
+      Abarrotes: 6,
+      "Frutas y Verduras": 9,
+      Mariscos: 5,
+      "Agua Purificada": 1,
+      Tortillas: 1,
+      Café: 1,
+    };
+    const PRES_CATS = Object.keys(PCT_DEF); // 11 categories (last 3 only in budget)
+    const EXTRA_CATS = ["Agua Purificada", "Tortillas", "Café"]; // only in presupuesto
+
+    function getPV(pid) {
+      if (!S.ventas) S.ventas = {};
+      if (!S.ventas[pid]) S.ventas[pid] = {
+        dias: [],
+        pcts: {
+          ...PCT_DEF
+        }
+      };
+      return S.ventas[pid];
+    }
+
+    // Linear projection: (acumulado / días con venta) * días totales del mes
+    function calcProyeccion(pid) {
+      const pv = getPV(pid);
+      if (!pv.dias.length) return 0;
+      // Use the LAST date with a sale to determine how many days have elapsed
+      const sorted = pv.dias
+        .slice()
+        .sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const lastFecha = sorted[sorted.length - 1].fecha;
+      const lastDate = new Date(lastFecha + "T12:00:00");
+      const year = lastDate.getFullYear();
+      const month = lastDate.getMonth();
+      const diasMes = new Date(year, month + 1, 0).getDate();
+      // Días transcurridos = número de día del último registro (ej. día 29 → 29 días)
+      const diasTranscurridos = lastDate.getDate();
+      const acumulado = pv.dias.reduce((s, d) => s + (d.monto || 0), 0);
+      if (diasTranscurridos === 0) return 0;
+      // Proyección lineal: (acumulado / días transcurridos) × días totales del mes
+      return (acumulado / diasTranscurridos) * diasMes;
+    }
+
+    function getVentaReal(pid) {
+      const pv = getPV(pid);
+      return pv.dias.reduce((s, d) => s + (d.monto || 0), 0);
+    }
+
+    // Get week label S1-S4 from a date string
+    function semLabel(fecha) {
+      if (!fecha) return "S?";
+      const d = parseInt(fecha.split("-")[2] || 0);
+      if (d <= 7) return "S1";
+      if (d <= 14) return "S2";
+      if (d <= 21) return "S3";
+      return "S4";
+    }
+
+    // Get compras totals grouped by cat + semana
+    function comprasByCatSem(pid) {
+      const comp = S.compras[pid] || [];
+      const result = {};
+      PRES_CATS.forEach(
+        (c) => (result[c] = {
+          S1: 0,
+          S2: 0,
+          S3: 0,
+          S4: 0,
+          total: 0
+        }),
+      );
+      comp.forEach((c) => {
+        const cat = c.cat;
+        if (!result[cat])
+          result[cat] = {
+            S1: 0,
+            S2: 0,
+            S3: 0,
+            S4: 0,
+            total: 0
+          };
+        const sem = semLabel(c.fecha);
+        result[cat][sem] = (result[cat][sem] || 0) + (c.monto || 0);
+        result[cat].total += c.monto || 0;
+      });
+      return result;
+    }
+
+    function renderGV() {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      const per = S.periodos.find((p) => p.id === pid);
+      const ventaReal = getVentaReal(pid);
+      const ventaProy = calcProyeccion(pid);
+      const diasConVenta = pv.dias.length;
+
+      // Detect month info using LAST captured date (same logic as calcProyeccion)
+      const sorted = pv.dias
+        .slice()
+        .sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const lastFecha = sorted.length ?
+        sorted[sorted.length - 1].fecha :
+        todayLocalISO();
+      const lastDate = new Date(lastFecha + "T12:00:00");
+      const diasMes = new Date(
+        lastDate.getFullYear(),
+        lastDate.getMonth() + 1,
+        0,
+      ).getDate();
+      const diasTranscurridos = sorted.length ? lastDate.getDate() : 0;
+      const diasRestantes = diasMes - diasTranscurridos;
+
+      // Total compras (todos los rubros incl. extras)
+      const compByCat = comprasByCatSem(pid);
+      const totalCompras = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.total || 0),
+        0,
+      );
+      const costoRealPct =
+        ventaReal > 0 ? (totalCompras / ventaReal) * 100 : 0;
+      const costoPrPct = ventaProy > 0 ? (totalCompras / ventaProy) * 100 : 0;
+      // Color based on 36% target
+      const colorPct = (pct) =>
+        pct === 0 ?
+        "var(--muted)" :
+        pct <= 36 ?
+        "var(--green)" :
+        pct <= 40 ?
+        "var(--gold)" :
+        "var(--red)";
+
+      // Budget = pct% × venta proyectada
+      const totalPresup = PRES_CATS.reduce((s, c) => {
+        const pct = (pv.pcts[c] ?? PCT_DEF[c] ?? 0) / 100;
+        return s + ventaProy * pct;
+      }, 0);
+      const totalSobrante = totalPresup - totalCompras;
+
+      let h = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <p class="stitle" style="margin:0">Mes de ${per ? per.nombre : ""}</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="bsm" onclick="openAddVenta()">+ Venta diaria</button>
+      <button class="bsm g" onclick="openEditPcts()">% Costos</button>
+      <button class="bsm" onclick="exportVentas()">Exportar</button>
+    </div>
+  </div>
+
+  <!-- HEADER: replica exacta del Excel — 2 filas -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);background:#191200">
+      <div>
+        <div style="font-size:10px;color:var(--goldd);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px">Venta Proyectada</div>
+        <div style="font-family:'Fraunces',serif;font-size:19px;color:var(--gold)">${fmt(ventaProy)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:1px">Día ${diasTranscurridos} de ${diasMes} · faltan ${diasRestantes}</div>
+      </div>
+      <div style="text-align:center"><div style="font-size:9px;color:var(--muted);margin-bottom:2px">COSTO</div><div style="font-size:13px;font-weight:700">${fmt(totalCompras)}</div></div>
+      <div style="text-align:center"><div style="font-size:9px;color:var(--muted);margin-bottom:2px">% COSTO</div><div style="font-size:17px;font-weight:800;color:${colorPct(costoPrPct)}">${ventaProy > 0 ? costoPrPct.toFixed(2) + "%" : "—"}</div></div>
+      <div style="text-align:center"><div style="font-size:9px;color:var(--muted);margin-bottom:2px">OBJETIVO</div><div style="font-size:13px;font-weight:600;color:var(--muted)">36.00%</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;align-items:center;padding:11px 14px">
+      <div>
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px">Venta Real</div>
+        <div style="font-family:'Fraunces',serif;font-size:19px;color:var(--text)">${fmt(ventaReal)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:1px">${diasConVenta} días cap. · ${ventaProy > 0 ? ((ventaReal / ventaProy) * 100).toFixed(1) : 0}% del proy.</div>
+      </div>
+      <div style="text-align:center"><div style="font-size:9px;color:var(--muted);margin-bottom:2px">COSTO</div><div style="font-size:13px;font-weight:700">${fmt(totalCompras)}</div></div>
+      <div style="text-align:center"><div style="font-size:9px;color:var(--muted);margin-bottom:2px">% COSTO</div><div style="font-size:17px;font-weight:800;color:${colorPct(costoRealPct)}">${ventaReal > 0 ? costoRealPct.toFixed(2) + "%" : "—"}</div></div>
+      <div style="text-align:center">
+        <div style="background:var(--border);height:5px;border-radius:3px;overflow:hidden;margin-bottom:4px"><div style="height:100%;background:var(--green);border-radius:3px;width:${ventaProy > 0 ? Math.min(100, (ventaReal / ventaProy) * 100).toFixed(1) : 0}%"></div></div>
+        <div style="font-size:10px;color:var(--muted)">${ventaProy > 0 ? ((ventaReal / ventaProy) * 100).toFixed(1) : 0}% avance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESUPUESTO PARA COMPRAS -->
+  <div style="font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:7px;padding:0 2px">Presupuesto para Compras</div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.7fr 0.7fr 0.9fr 1fr;gap:0;padding:7px 8px;border-bottom:1px solid var(--border);background:var(--s2)">
+      <div style="font-size:9px;color:var(--muted);font-weight:700">CATEGORÍA</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">PRESUP.</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">S1</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">S2</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">S3</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">S4</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">TOTAL</div>
+      <div style="font-size:9px;color:var(--muted);font-weight:700;text-align:right">SOBRANTE</div>
+    </div>`;
+
+      const cv = (v) =>
+        v > 0 ? fmtK(v) : `<span style="color:#333">—</span>`;
+      PRES_CATS.forEach((cat) => {
+        const pct = pv.pcts[cat] ?? PCT_DEF[cat] ?? 0;
+        const presup = (ventaProy * pct) / 100;
+        const cb = compByCat[cat] || {
+          S1: 0,
+          S2: 0,
+          S3: 0,
+          S4: 0,
+          total: 0
+        };
+        const sobrante = presup - cb.total;
+        const isExtra = EXTRA_CATS.includes(cat);
+        h += `
+    <div style="display:grid;grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.7fr 0.7fr 0.9fr 1fr;gap:0;padding:8px 8px;border-bottom:1px solid var(--border);${isExtra ? "background:#0d0d0d" : ""}">
+      <div><div style="font-size:12px;font-weight:600">${cat}</div><div style="font-size:10px;color:var(--muted)">${pct}%</div></div>
+      <div style="font-size:11px;text-align:right;color:var(--muted)">${fmtK(presup)}</div>
+      <div style="font-size:11px;text-align:right">${cv(cb.S1)}</div>
+      <div style="font-size:11px;text-align:right">${cv(cb.S2)}</div>
+      <div style="font-size:11px;text-align:right">${cv(cb.S3)}</div>
+      <div style="font-size:11px;text-align:right">${cv(cb.S4)}</div>
+      <div style="font-size:11px;font-weight:600;text-align:right">${cb.total > 0 ? fmtK(cb.total) : '<span style="color:#333">—</span>'}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right;color:${sobrante >= 0 ? "var(--green)" : "var(--red)"}">${sobrante >= 0 ? "" : "-"}${fmtK(Math.abs(sobrante))}</div>
+    </div>`;
+      });
+
+      const totS1 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S1 || 0),
+        0,
+      );
+      const totS2 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S2 || 0),
+        0,
+      );
+      const totS3 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S3 || 0),
+        0,
+      );
+      const totS4 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S4 || 0),
+        0,
+      );
+      h += `
+    <div style="display:grid;grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.7fr 0.7fr 0.9fr 1fr;gap:0;padding:9px 8px;background:var(--s2);border-top:2px solid var(--border)">
+      <div style="font-size:11px;font-weight:700">TOTAL <span style="color:var(--muted);font-weight:400">100%</span></div>
+      <div style="font-size:11px;font-weight:700;text-align:right;color:var(--gold)">${fmtK(totalPresup)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right">${cv(totS1)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right">${cv(totS2)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right">${cv(totS3)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right">${cv(totS4)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right">${fmtK(totalCompras)}</div>
+      <div style="font-size:11px;font-weight:700;text-align:right;color:${totalSobrante >= 0 ? "var(--green)" : "var(--red)"}">${totalSobrante >= 0 ? "" : "-"}${fmtK(Math.abs(totalSobrante))}</div>
+    </div>
+  </div>
+
+  <!-- VENTAS DIARIAS -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Ventas capturadas</div>
+    <div style="font-size:11px;color:var(--muted)">${diasConVenta} días</div>
+  </div>`;
+
+      if (pv.dias.length === 0) {
+        h += `<div class="es">Sin ventas registradas. Presiona "+ Venta diaria" para empezar.</div>`;
+      } else {
+        h += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">`;
+        pv.dias
+          .slice()
+          .reverse()
+          .forEach((d, ri) => {
+            const i = pv.dias.length - 1 - ri;
+            const dow = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+            const fecha = new Date(d.fecha + "T12:00:00");
+            const dia = dow[fecha.getDay()];
+            h += `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border)">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">${dia} ${d.fecha}</div>
+          <div style="font-size:11px;color:var(--muted)">${d.nota || "—"}</div>
+        </div>
+        <div style="font-family:'Fraunces',serif;font-size:16px;color:var(--green)">${fmt(d.monto)}</div>
+        <button onclick="delVenta(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:3px 7px">✕</button>
+      </div>`;
+          });
+        h += `</div>`;
+      }
+
+      document.getElementById("gVentas").innerHTML = h;
+    }
+
+    // Format compact: $1,234k or $123
+    function fmtK(n) {
+      if (Math.abs(n) >= 1000)
+        return (
+          "$" +
+          (n / 1000).toLocaleString("es-MX", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 1,
+          }) +
+          "k"
+        );
+      return "$" + Math.round(n).toLocaleString("es-MX");
+    }
+
+    // Open add venta modal
+    function openAddVenta() {
+      document.getElementById("vfecha").value = todayLocalISO();
+      document.getElementById("vmonto").value = "";
+      document.getElementById("vnota").value = "";
+      document.getElementById("vedit-idx").value = "-1";
+      document.getElementById("mventa").style.display = "flex";
+      setTimeout(() => document.getElementById("vmonto").focus(), 200);
+    }
+
+    function saveVenta() {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      const fecha = document.getElementById("vfecha").value;
+      const monto = parseFloat(document.getElementById("vmonto").value) || 0;
+      const nota = document.getElementById("vnota").value.trim();
+      const idx = parseInt(document.getElementById("vedit-idx").value);
+      if (!monto || monto <= 0) return;
+      if (idx >= 0) {
+        pv.dias[idx] = {
+          fecha,
+          monto,
+          nota
+        };
+      } else {
+        // Check duplicate date
+        const dup = pv.dias.findIndex((d) => d.fecha === fecha);
+        if (dup >= 0) {
+          pv.dias[dup] = {
+            fecha,
+            monto,
+            nota
+          };
+        } else {
+          pv.dias.push({
+            fecha,
+            monto,
+            nota
+          });
+        }
+        pv.dias.sort((a, b) => a.fecha.localeCompare(b.fecha));
+      }
+      if (!S.ventas) S.ventas = {};
+      S.ventas[pid] = pv;
+      saveS();
+      document.getElementById("mventa").style.display = "none";
+      renderGV();
+    }
+
+    function delVenta(i) {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      pv.dias.splice(i, 1);
+      if (!S.ventas) S.ventas = {};
+      S.ventas[pid] = pv;
+      saveS();
+      renderGV();
+    }
+
+    // Open % cost editor modal
+    function openEditPcts() {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      let h = "";
+      PRES_CATS.forEach((cat) => {
+        const val = pv.pcts[cat] ?? PCT_DEF[cat] ?? 0;
+        h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:13px">${cat}</span>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input type="number" min="0" max="100" step="0.5" value="${val}" id="pct_${cat.replace(/\s/g, "_")}" style="width:60px;background:var(--s2);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:7px;font-family:inherit;font-size:13px;outline:none;text-align:center">
+        <span style="font-size:12px;color:var(--muted)">%</span>
+      </div>
+    </div>`;
+      });
+      document.getElementById("pct-editor").innerHTML = h;
+      document.getElementById("mvproyectada").style.display = "flex";
+    }
+
+    function saveProyectada() {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      PRES_CATS.forEach((cat) => {
+        const el = document.getElementById("pct_" + cat.replace(/\s/g, "_"));
+        if (el) pv.pcts[cat] = parseFloat(el.value) || 0;
+      });
+      if (!S.ventas) S.ventas = {};
+      S.ventas[pid] = pv;
+      saveS();
+      document.getElementById("mvproyectada").style.display = "none";
+      renderGV();
+    }
+
+    // Navigate to compras tab filtered by category
+    function goComprasCat(cat) {
+      // Switch to compras screen with that category pre-selected
+      // For now just show a hint – full deep-link would require cross-screen state
+    }
+
+    // Export ventas + presupuesto to CSV
+    function exportVentas() {
+      const pid = S.pid;
+      const pv = getPV(pid);
+      const per = S.periodos.find((p) => p.id === pid);
+      const ventaReal = getVentaReal(pid);
+      const ventaProy = calcProyeccion(pid);
+      const compByCat = comprasByCatSem(pid);
+      const totalCompras = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.total || 0),
+        0,
+      );
+
+      let csv = `"La Estancia Argentina León — Presupuesto de Compras"\n"${per?.nombre || ""}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n`;
+      csv += `"VENTA PROYECTADA","${ventaProy.toFixed(2)}","COSTO","${totalCompras.toFixed(2)}","${ventaProy > 0 ? ((totalCompras / ventaProy) * 100).toFixed(2) : 0}%"\n`;
+      csv += `"VENTA REAL","${ventaReal.toFixed(2)}","COSTO","${totalCompras.toFixed(2)}","${ventaReal > 0 ? ((totalCompras / ventaReal) * 100).toFixed(2) : 0}%"\n\n`;
+      csv += `"PRESUPUESTO PARA COMPRAS"\n`;
+      csv += `"CATEGORÍA","%","PRESUPUESTO","1 SEMANA","2 SEMANA","3 SEMANA","4 SEMANA","TOTAL","SOBRANTE"\n`;
+
+      PRES_CATS.forEach((cat) => {
+        const pct = pv.pcts[cat] ?? PCT_DEF[cat] ?? 0;
+        const presup = (ventaProy * pct) / 100;
+        const cb = compByCat[cat] || {
+          S1: 0,
+          S2: 0,
+          S3: 0,
+          S4: 0,
+          total: 0
+        };
+        const sobrante = presup - cb.total;
+        csv += `"${cat}","${pct}%","${presup.toFixed(2)}","${cb.S1.toFixed(2)}","${cb.S2.toFixed(2)}","${cb.S3.toFixed(2)}","${cb.S4.toFixed(2)}","${cb.total.toFixed(2)}","${sobrante.toFixed(2)}"\n`;
+      });
+
+      const totS1 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S1 || 0),
+        0,
+      );
+      const totS2 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S2 || 0),
+        0,
+      );
+      const totS3 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S3 || 0),
+        0,
+      );
+      const totS4 = PRES_CATS.reduce(
+        (s, c) => s + (compByCat[c]?.S4 || 0),
+        0,
+      );
+      const totalPresup = PRES_CATS.reduce(
+        (s, c) => s + (ventaProy * (pv.pcts[c] ?? PCT_DEF[c] ?? 0)) / 100,
+        0,
+      );
+      csv += `"TOTAL","100%","${totalPresup.toFixed(2)}","${totS1.toFixed(2)}","${totS2.toFixed(2)}","${totS3.toFixed(2)}","${totS4.toFixed(2)}","${totalCompras.toFixed(2)}","${(totalPresup - totalCompras).toFixed(2)}"\n\n`;
+
+      csv += `"VENTAS DIARIAS"\n"FECHA","DÍA","MONTO","NOTA"\n`;
+      pv.dias.forEach((d) => {
+        const dow = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+        const fd = new Date(d.fecha + "T12:00:00");
+        csv += `"${d.fecha}","${dow[fd.getDay()]}","${d.monto.toFixed(2)}","${d.nota || ""}"\n`;
+      });
+      csv += `"TOTAL","","${ventaReal.toFixed(2)}",""\n`;
+
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8",
+      });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `ventas_presupuesto_${(per?.nombre || "").replace(/\s/g, "_")}_${todayLocalISO()}.csv`;
+      a.click();
+    }
+
+    loadS();
+
+  </script>
+</body>
+
+</html>
