@@ -1272,6 +1272,19 @@
     const INV0 = 334195;
 
 
+    // ─── XSS ESCAPE ───
+    function esc(s) {
+      if (s == null) return "";
+      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    }
+    // CSV-safe: escape quotes and neutralize formula injection
+    function csvSafe(s) {
+      if (s == null) return "";
+      s = String(s).replace(/"/g, '""');
+      if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+      return s;
+    }
+
     // ─── API LAYER ───
     const _api = {
       get: u => fetch(u).then(r => r.json()),
@@ -1467,9 +1480,9 @@
           hq = aq > 0;
         if (ars.length === 1) {
           const ar = ars[0];
-          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${k}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${k}','${ar}',1,'c')">+</button><div class="qv">${fmt((cnt[ar] || 0) * p.p)}</div></div></div>`;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${esc(p.n)}</div><div class="pm">${esc(p.id)} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${esc(k)}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${esc(k)}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${esc(k)}','${ar}',1,'c')">+</button><div class="qv">${fmt((cnt[ar] || 0) * p.p)}</div></div></div>`;
         } else {
-          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${ars.map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:52px;text-align:right">${ALB[ar]}</span><button class="qb" onclick="adj('${k}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${k}','${ar}',1,'c')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(aq * p.p)}</div></div></div>`;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${esc(p.n)}</div><div class="pm">${esc(p.id)} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${ars.map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:52px;text-align:right">${ALB[ar]}</span><button class="qb" onclick="adj('${esc(k)}','${ar}',-1,'c')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${esc(k)}','${ar}',this.value,'c')"><button class="qb" onclick="adj('${esc(k)}','${ar}',1,'c')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(aq * p.p)}</div></div></div>`;
         }
       }
       document.getElementById("cplist").innerHTML =
@@ -1549,7 +1562,7 @@
       const pid = S.pid,
         t = tots(pid),
         per = S.periodos.find((p) => p.id === pid);
-      let h = `<p class="stitle">${per ? per.nombre : "Inventario"}</p><div class="kgrid"><div class="kpi"><div class="klbl">Total inventario</div><div class="kval">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">vs Feb 28</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div><div class="catsum">`;
+      let h = `<p class="stitle">${per ? esc(per.nombre) : "Inventario"}</p><div class="kgrid"><div class="kpi"><div class="klbl">Total inventario</div><div class="kval">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">vs Feb 28</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div><div class="catsum">`;
       CATS_ALL.forEach((c, i) => {
         const v = t[c] || 0,
           pct = t._t > 0 ? (v / t._t) * 100 : 0,
@@ -1581,7 +1594,7 @@
           ).toLowerCase();
           if (ns && !p.n.toLowerCase().includes(ns)) continue;
           const hq = sc(gc(pid, p.id || p.n)) > 0;
-          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id || "—"} · ${c} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}${p.presentacion ? " · " + p.presentacion : ""}</div></div><button class="bsm" onclick='openEP(${JSON.stringify(p)},"${c}")'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4L7 21H3v-4L17 3z"/></svg></button></div>`;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${esc(p.n)}</div><div class="pm">${esc(p.id) || "—"} · ${esc(c)} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}${p.presentacion ? " · " + esc(p.presentacion) : ""}</div></div><button class="bsm" onclick='openEP(${esc(JSON.stringify(p))},"${esc(c)}")'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4L7 21H3v-4L17 3z"/></svg></button></div>`;
         }
       }
       h += "</div>";
@@ -1659,7 +1672,7 @@
           .reverse()
           .forEach((c, ri) => {
             const i = comp.length - 1 - ri;
-            h += `<div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:13px;font-weight:500">${c.cat}</div><div style="font-size:11px;color:var(--muted)">${c.desc || "—"} · ${c.fecha || ""}</div></div><div style="font-weight:700;color:var(--gold)">${fmt(c.monto)}</div><button onclick="delC(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:3px 7px">✕</button></div>`;
+            h += `<div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:13px;font-weight:500">${esc(c.cat)}</div><div style="font-size:11px;color:var(--muted)">${esc(c.desc) || "—"} · ${esc(c.fecha) || ""}</div></div><div style="font-weight:700;color:var(--gold)">${fmt(c.monto)}</div><button onclick="delC(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:3px 7px">✕</button></div>`;
           });
         h += `</div>`;
       } else h += `<div class="es">Sin compras registradas</div>`;
@@ -1722,12 +1735,12 @@
         pt = prev ? tots(prev.id)._t : INV0,
         d = t._t - pt,
         comp = (S.compras[pid] || []).reduce((s, c) => s + (c.monto || 0), 0);
-      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">${per ? per.nombre : "Dashboard"}</p><div style="display:flex;gap:6px"><button class="bsm" onclick="exportX()">Exportar</button><button class="bsm g" onclick="showMP()">+ Periodo</button></div></div><div class="kgrid"><div class="kpi"><div class="klbl">Inventario actual</div><div class="kval">${fmt(t._t)}</div><div class="ksub">Valorizado al costo</div></div><div class="kpi"><div class="klbl">Variación vs anterior</div><div class="kval sm" style="color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)}</div><div class="ksub">ant: ${fmt(pt)}</div></div><div class="kpi"><div class="klbl">Compras del periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. base Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div></div><div class="catsum">`;
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px"><p class="stitle" style="margin:0">${per ? esc(per.nombre) : "Dashboard"}</p><div style="display:flex;gap:6px"><button class="bsm" onclick="exportX()">Exportar</button><button class="bsm g" onclick="showMP()">+ Periodo</button></div></div><div class="kgrid"><div class="kpi"><div class="klbl">Inventario actual</div><div class="kval">${fmt(t._t)}</div><div class="ksub">Valorizado al costo</div></div><div class="kpi"><div class="klbl">Variación vs anterior</div><div class="kval sm" style="color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)}</div><div class="ksub">ant: ${fmt(pt)}</div></div><div class="kpi"><div class="klbl">Compras del periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. base Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div></div><div class="catsum">`;
       CATS_ALL.forEach((c, i) => {
         const v = t[c] || 0,
           pct = t._t > 0 ? (v / t._t) * 100 : 0,
           col = CC[i % CC.length];
-        h += `<div class="crow" onclick="goGCap('${c}')"><div class="cdot" style="background:${col}"></div><div style="flex:1"><div class="cname">${c}</div><div class="cbar"><div class="cbarfill" style="width:${pct.toFixed(1)}%;background:${col}"></div></div></div><div class="cval">${fmt(v)}</div></div>`;
+        h += `<div class="crow" onclick="goGCap('${esc(c)}')"><div class="cdot" style="background:${col}"></div><div style="flex:1"><div class="cname">${esc(c)}</div><div class="cbar"><div class="cbarfill" style="width:${pct.toFixed(1)}%;background:${col}"></div></div></div><div class="cval">${fmt(v)}</div></div>`;
       });
       h += "</div>";
       document.getElementById("gDash").innerHTML = h;
@@ -1781,10 +1794,10 @@
           cnt = gc(pid, k),
           hq = sc(cnt) > 0;
         if (gArea === "all") {
-          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">${p.id} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${["a", "b", "c", "pr"].map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:44px;text-align:right">${{ a: "Almacén", b: "Barra", c: "Cocina", pr: "Prod." }[ar]}</span><button class="qb" onclick="adj('${k}','${ar}',−1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${k}','${ar}',1,'g')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(sc(cnt) * p.p)}</div></div></div>`;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${esc(p.n)}</div><div class="pm">${esc(p.id)} · $${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div>${["a", "b", "c", "pr"].map((ar) => `<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;justify-content:flex-end"><span style="font-size:10px;color:var(--muted);width:44px;text-align:right">${{ a: "Almacén", b: "Barra", c: "Cocina", pr: "Prod." }[ar]}</span><button class="qb" onclick="adj('${esc(k)}','${ar}',−1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${esc(k)}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${esc(k)}','${ar}',1,'g')">+</button></div>`).join("")}<div style="text-align:right;font-size:11px;color:var(--gold)">${fmt(sc(cnt) * p.p)}</div></div></div>`;
         } else {
           const ar = ars[0];
-          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${p.n}</div><div class="pm">$${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${k}','${ar}',-1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${k}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${k}','${ar}',1,'g')">+</button><div class="qv">${fmt(sc(cnt) * p.p)}</div></div></div>`;
+          h += `<div class="pi${hq ? " hq" : ""}"><div class="pinf"><div class="pn">${esc(p.n)}</div><div class="pm">$${p.p.toLocaleString("es-MX", { maximumFractionDigits: 2 })}</div></div><div class="qctrl"><button class="qb" onclick="adj('${esc(k)}','${ar}',-1,'g')">−</button><input class="qi" type="number" min="0" step="0.1" value="${cnt[ar] || 0}" onchange="setq('${esc(k)}','${ar}',this.value,'g')"><button class="qb" onclick="adj('${esc(k)}','${ar}',1,'g')">+</button><div class="qv">${fmt(sc(cnt) * p.p)}</div></div></div>`;
         }
       }
       document.getElementById("gplist").innerHTML =
@@ -1821,7 +1834,7 @@
       CATS_ALL.forEach((c) => {
         ci[c] = (_initialCatTotals && _initialCatTotals[c]) || 0;
       });
-      let h = `<p class="stitle">Cierre — ${per ? per.nombre : ""}</p><div class="kgrid"><div class="kpi"><div class="klbl">Inv. inicial Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div><div class="kpi"><div class="klbl">Compras periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. actual</div><div class="kval sm">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">Variación neta</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div>`;
+      let h = `<p class="stitle">Cierre — ${per ? esc(per.nombre) : ""}</p><div class="kgrid"><div class="kpi"><div class="klbl">Inv. inicial Feb 28</div><div class="kval sm">${fmt(INV0)}</div></div><div class="kpi"><div class="klbl">Compras periodo</div><div class="kval sm" style="color:var(--gold)">${fmt(comp)}</div></div><div class="kpi"><div class="klbl">Inv. actual</div><div class="kval sm">${fmt(t._t)}</div></div><div class="kpi"><div class="klbl">Variación neta</div><div class="kval sm" style="color:${t._t >= INV0 ? "var(--green)" : "var(--red)"}">${t._t >= INV0 ? "+" : ""}${fmt(t._t - INV0)}</div></div></div>`;
       CATS_ALL.forEach((c, i) => {
         const cur = t[c] || 0,
           ini = ci[c] || 0,
@@ -1840,7 +1853,7 @@
           pt = prev ? tots(prev.id)._t : INV0,
           d = t._t - pt,
           act = p.id === S.pid;
-        h += `<div class="card" style="cursor:pointer;border-color:${act ? "var(--gold)" : "var(--border)"}" onclick="setAP('${p.id}')"><div class="ch"><div><div class="ct">${p.nombre} <span class="tag ${act ? "topen" : "tclosed"}">${act ? "Activo" : "Cerrado"}</span></div><div class="cs">${p.fecha}</div></div><div style="text-align:right"><div class="cv">${fmt(t._t)}</div><div style="font-size:11px;color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)} vs ant.</div></div></div></div>`;
+        h += `<div class="card" style="cursor:pointer;border-color:${act ? "var(--gold)" : "var(--border)"}" onclick="setAP('${esc(p.id)}')"><div class="ch"><div><div class="ct">${esc(p.nombre)} <span class="tag ${act ? "topen" : "tclosed"}">${act ? "Activo" : "Cerrado"}</span></div><div class="cs">${esc(p.fecha)}</div></div><div style="text-align:right"><div class="cv">${fmt(t._t)}</div><div style="font-size:11px;color:${d >= 0 ? "var(--green)" : "var(--red)"}">${d >= 0 ? "+" : ""}${fmt(d)} vs ant.</div></div></div></div>`;
       });
       document.getElementById("gHist").innerHTML = h;
     }
@@ -1877,7 +1890,7 @@
         cat = S.catalog || {},
         per = S.periodos.find((p) => p.id === pid),
         t = tots(pid);
-      let csv = `"La Estancia Argentina León — Inventario"\n"${per ? per.nombre : ""}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n"Categoría","ID","Producto","Presentación","Almacén","Barra","Cocina","Producción","Total Unidades","Precio Unitario","Valor Total"\n`;
+      let csv = `"La Estancia Argentina León — Inventario"\n"${csvSafe(per ? per.nombre : "")}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n"Categoría","ID","Producto","Presentación","Almacén","Barra","Cocina","Producción","Total Unidades","Precio Unitario","Valor Total"\n`;
       let grand = 0;
       for (const [c, prods] of Object.entries(cat)) {
         let ct = 0;
@@ -1888,7 +1901,7 @@
           if (q > 0) {
             const v = q * p.p;
             ct += v;
-            csv += `"${c}","${p.id || ""}","${p.n}","${p.presentacion || ""}",${cnt.a || 0},${cnt.b || 0},${cnt.c || 0},${cnt.pr || 0},${q},$${p.p.toFixed(2)},$${v.toFixed(2)}\n`;
+            csv += `"${csvSafe(c)}","${csvSafe(p.id)}","${csvSafe(p.n)}","${csvSafe(p.presentacion)}",${cnt.a || 0},${cnt.b || 0},${cnt.c || 0},${cnt.pr || 0},${q},$${p.p.toFixed(2)},$${v.toFixed(2)}\n`;
           }
         }
         if (ct > 0) {
@@ -1901,7 +1914,7 @@
       if (comp.length) {
         csv += `\n"COMPRAS DEL PERIODO"\n"Categoría","Descripción","Fecha","Monto"\n`;
         comp.forEach((c) => {
-          csv += `"${c.cat}","${c.desc || ""}","${c.fecha || ""}","$${(c.monto || 0).toFixed(2)}"\n`;
+          csv += `"${csvSafe(c.cat)}","${csvSafe(c.desc)}","${csvSafe(c.fecha)}","$${(c.monto || 0).toFixed(2)}"\n`;
         });
         csv += `"","TOTAL COMPRAS","","$${comp.reduce((s, c) => s + (c.monto || 0), 0).toFixed(2)}"\n`;
       }
@@ -2065,7 +2078,7 @@
 
       let h = `
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-    <p class="stitle" style="margin:0">Mes de ${per ? per.nombre : ""}</p>
+    <p class="stitle" style="margin:0">Mes de ${per ? esc(per.nombre) : ""}</p>
     <div style="display:flex;gap:6px;flex-wrap:wrap">
       <button class="bsm" onclick="openAddVenta()">+ Venta diaria</button>
       <button class="bsm g" onclick="openEditPcts()">% Costos</button>
@@ -2190,8 +2203,8 @@
             const dia = dow[fecha.getDay()];
             h += `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border)">
         <div style="flex:1">
-          <div style="font-size:13px;font-weight:600">${dia} ${d.fecha}</div>
-          <div style="font-size:11px;color:var(--muted)">${d.nota || "—"}</div>
+          <div style="font-size:13px;font-weight:600">${esc(dia)} ${esc(d.fecha)}</div>
+          <div style="font-size:11px;color:var(--muted)">${esc(d.nota) || "—"}</div>
         </div>
         <div style="font-family:'Fraunces',serif;font-size:16px;color:var(--green)">${fmt(d.monto)}</div>
         <button onclick="delVenta(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:3px 7px">✕</button>
@@ -2316,7 +2329,7 @@
         0,
       );
 
-      let csv = `"La Estancia Argentina León — Presupuesto de Compras"\n"${per?.nombre || ""}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n`;
+      let csv = `"La Estancia Argentina León — Presupuesto de Compras"\n"${csvSafe(per?.nombre)}"\n"Exportado: ${new Date().toLocaleDateString("es-MX")}"\n\n`;
       csv += `"VENTA PROYECTADA","${ventaProy.toFixed(2)}","COSTO","${totalCompras.toFixed(2)}","${ventaProy > 0 ? ((totalCompras / ventaProy) * 100).toFixed(2) : 0}%"\n`;
       csv += `"VENTA REAL","${ventaReal.toFixed(2)}","COSTO","${totalCompras.toFixed(2)}","${ventaReal > 0 ? ((totalCompras / ventaReal) * 100).toFixed(2) : 0}%"\n\n`;
       csv += `"PRESUPUESTO PARA COMPRAS"\n`;
@@ -2333,7 +2346,7 @@
           total: 0
         };
         const sobrante = presup - cb.total;
-        csv += `"${cat}","${pct}%","${presup.toFixed(2)}","${cb.S1.toFixed(2)}","${cb.S2.toFixed(2)}","${cb.S3.toFixed(2)}","${cb.S4.toFixed(2)}","${cb.total.toFixed(2)}","${sobrante.toFixed(2)}"\n`;
+        csv += `"${csvSafe(cat)}","${pct}%","${presup.toFixed(2)}","${cb.S1.toFixed(2)}","${cb.S2.toFixed(2)}","${cb.S3.toFixed(2)}","${cb.S4.toFixed(2)}","${cb.total.toFixed(2)}","${sobrante.toFixed(2)}"\n`;
       });
 
       const totS1 = PRES_CATS.reduce(
@@ -2362,7 +2375,7 @@
       pv.dias.forEach((d) => {
         const dow = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
         const fd = new Date(d.fecha + "T12:00:00");
-        csv += `"${d.fecha}","${dow[fd.getDay()]}","${d.monto.toFixed(2)}","${d.nota || ""}"\n`;
+        csv += `"${csvSafe(d.fecha)}","${dow[fd.getDay()]}","${d.monto.toFixed(2)}","${csvSafe(d.nota)}"\n`;
       });
       csv += `"TOTAL","","${ventaReal.toFixed(2)}",""\n`;
 

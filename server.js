@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const { neon } = require("@neondatabase/serverless");
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -11,8 +13,16 @@ if (!DATABASE_URL) {
 
 const sql = neon(DATABASE_URL);
 const app = express();
-app.use(cors());
-app.use(express.json());
+
+const ALLOWED_ORIGINS = [
+  "https://inventarios-estancia.fly.dev",
+  process.env.NODE_ENV !== "production" && "http://localhost:3000",
+].filter(Boolean);
+
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(cors({ origin: ALLOWED_ORIGINS }));
+app.use(express.json({ limit: "10kb" }));
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 500 }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // ─── PERIODOS ───
@@ -202,6 +212,12 @@ app.get("/api/state/:periodoId", async (req, res) => {
 // Serve index.html for all non-API routes
 app.get("/{*splat}", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Global error handler — never leak internals
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
 });
 
 const PORT = process.env.PORT || 3000;
